@@ -448,7 +448,7 @@ const Figshare = {
 const Dryad = {
   Style: 'CategoryAmountRatesCost',
   Provider: 'Dryad',
-  Name: 'Dyrad',
+  Name: 'Dryad',
   Url: [
     { Name: 'Dryad Website Pricing', Url: 'https://datadryad.org/stash/requirements#cost' }
   ],
