@@ -1790,11 +1790,15 @@ class Main extends React.Component {
   // Define the head (top) of the page
   page_head () {
     let helpbtn = null
+    let feedbackbtn = null
     let imglogo = null
     if (MainData.HelpUrl != null && MainData.HelpUrl !== '') {
       helpbtn = <a className="btn btn-danger" id="head-help" target="_blank" href={MainData.HelpUrl}
                        onClick={() => this.btnClick('helpbtn', 0)} rel="noreferrer">
                             <img src="./icon/help.png" width="20"/>&nbsp;I need help with my DMP</a>
+      feedbackbtn = <a className="btn btn-secondary" id="feedback" target="_blank" href={MainData.FeedbackUrl}
+                       onClick={() => this.btnClick('feedbackbtn', 0)} rel="noreferrer">
+                            Send feedback</a>
     }
     if (MainData.InstLogo != null && MainData.InstLogo !== '') { imglogo = <img src={'./icon/' + MainData.InstLogo} width={MainData.InstLogoWidth}/> }
     return (
@@ -1823,10 +1827,10 @@ class Main extends React.Component {
                       <br/>Total cost is calculated dynamically based on your inputs.
                     </p>
                     <p className="lead">
-                      We hope you will enjoy this tool and it will be useful for you.
+                      We hope you will enjoy this tool and it will be useful for you. Feedback from users and service providers is always welcome!
                     </p>
                     <ButtonInput class="btn btn-primary" id="head-howto" name={<span>To Know More (HOWTO)</span>} onClick={this.move2howto}/> &nbsp;
-                      {helpbtn}
+                      {feedbackbtn} &nbsp; {helpbtn}
                   </div>
                 </div>
               </div>
