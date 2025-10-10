@@ -245,8 +245,8 @@ const SLIMSEpfl = {
 
 const ELNEpfl = {
   Style: 'CategoryCost',
-  Provider: 'ELN-EPFL',
-  Name: 'ELN',
+  Provider: 'EPFL-SB-ISIC',
+  Name: 'eln.epfl.ch',
   ByYear: true,
   Url: [
     { Name: 'ELN Website', Url: 'https://eln.epfl.ch/' }
@@ -254,6 +254,21 @@ const ELNEpfl = {
   CatName: 'Options',
   Cat: {
     'Free for EPFL community': 0
+  },
+  CatUnit: 'CHF'
+}
+
+const OpenBIS = {
+  Style: 'CategoryCost',
+  Provider: 'EPFL-STI-IT + ETHZ',
+  Name: 'openBIS',
+  ByYear: true,
+  Url: [
+    { Name: 'ELN Website', Url: 'https://openbis.epfl.ch' }
+  ],
+  CatName: 'Options',
+  Cat: {
+    'Free for pilot labs': 0
   },
   CatUnit: 'CHF'
 }
@@ -275,8 +290,8 @@ const Rspace = {
 
 const Benchling = {
   Style: 'CategoryCost',
-  Provider: 'Benchling',
-  Name: 'ELN',
+  Provider: 'Benchling.com',
+  Name: 'Benchling ELN',
   ByYear: true,
   ExtraInfo: 'The first 10GB are free',
   ExtraInfoUrl: '',
@@ -597,6 +612,7 @@ const ELN = {
   Data: [NoneSelected,
     SLIMSEpfl,
     ELNEpfl,
+    OpenBIS,
     Rspace,
     Benchling,
     UserCostSelect
@@ -663,7 +679,7 @@ const MainData = {
   InstName: 'EPFL Library',
   InstLogo: 'logo.png',
   InstLogoWidth: 200,
-  Updated: '2025-07-10',
+  Updated: '2025-10-10',
   HelpUrl: 'mailto:researchdata@epfl.ch',
   Currency: 'CHF',
   OEXRApi: 'cd8d785bdb6646b0a7e4c0eba5a74199',
