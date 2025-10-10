@@ -690,7 +690,7 @@ const MainData = {
   StatsURL: 'costcalc.epfl.ch/matomo/',
   StatsID: '1',
   StatsContact: 'mailto:researchdata@epfl.ch',
-  Version: 'v2.4',
+  Version: 'v2.5',
   DefaultDuration: 1,
   DefaultArchiveDuration: 10,
   Data: [storage, ELN, Database, datarepository, coderepository, longermarchive]
