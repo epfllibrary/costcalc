@@ -121,19 +121,8 @@ function randomInt (not) {
   return rnd
 }
 
-// Inputs Definition
-// ---------------------
-// ---------------------
-// Display the amount selector
-class AmountInput extends React.Component {
-  constructor (props) {
-    super(props)
-    this.handleChange = this.handleChange.bind(this)
-  }
-
-  handleChange (e) {
-    this.props.onChange(e.target.value)
-  }
+class TooltipComponent extends React.Component {
+  // Useful tooltip functions in an intermediate class
 
   componentDidMount () {
     $('[data-toggle="tooltip"]').tooltip()
@@ -145,6 +134,23 @@ class AmountInput extends React.Component {
 
   componentWillUnmount () {
     $('[data-toggle="tooltip"]').tooltip('dispose')
+  }
+
+}
+
+
+// Inputs Definition
+// ---------------------
+// ---------------------
+// Display the amount selector
+class AmountInput extends TooltipComponent {
+  constructor (props) {
+    super(props)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange (e) {
+    this.props.onChange(e.target.value)
   }
 
   render () {
@@ -179,7 +185,7 @@ AmountInput.propTypes = {
 }
 
 // Display a select input box
-class SelectorInput extends React.Component {
+class SelectorInput extends TooltipComponent {
   constructor (props) {
     super(props)
     // this.state={listoptions:this.makelist(props.options)};
@@ -215,18 +221,6 @@ class SelectorInput extends React.Component {
       title = title.substr(0, maxstr) + '...'
     }
     return title
-  }
-
-  componentDidMount () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentDidUpdate () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentWillUnmount () {
-    $('[data-toggle="tooltip"]').tooltip('dispose')
   }
 
   render () {
@@ -269,22 +263,10 @@ SelectorInput.propTypes = {
 }
 
 // Make the read more button
-class MakeknowmoreInput extends React.Component {
+class MakeknowmoreInput extends TooltipComponent {
   constructor (props) {
     super(props)
     this.state = { btnsize: 20 }
-  }
-
-  componentDidMount () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentDidUpdate () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentWillUnmount () {
-    $('[data-toggle="tooltip"]').tooltip('dispose')
   }
 
   render () {
@@ -343,20 +325,12 @@ CheckboxInput.propTypes = {
 }
 
 // Display a btn with link
-class ButtonHrefInput extends React.Component {
+class ButtonHrefInput extends TooltipComponent {
   /*
   constructor (props) {
     super(props)
   }
   */
-
-  componentDidMount () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentDidUpdate () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
 
   render () {
     return (
@@ -373,7 +347,7 @@ ButtonHrefInput.propTypes = {
 }
 
 // Button with validation popup
-class ButtonInputWpop extends React.Component {
+class ButtonInputWpop extends TooltipComponent {
   constructor (props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
@@ -383,18 +357,6 @@ class ButtonInputWpop extends React.Component {
   handleChange () {
     const out = { n: this.props.n, target: this.state.target }
     this.props.onClick(out)
-  }
-
-  componentDidMount () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentDidUpdate () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentWillUnmount () {
-    $('[data-toggle="tooltip"]').tooltip('dispose')
   }
 
   render () {
@@ -439,7 +401,7 @@ ButtonInputWpop.propTypes = {
   onClick: PropTypes.func
 }
 // Display a button
-class ButtonInput extends React.Component {
+class ButtonInput extends TooltipComponent {
   constructor (props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
@@ -447,18 +409,6 @@ class ButtonInput extends React.Component {
 
   handleChange () {
     this.props.onClick(this.props.n)
-  }
-
-  componentDidMount () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentDidUpdate () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentWillUnmount () {
-    $('[data-toggle="tooltip"]').tooltip('dispose')
   }
 
   render () {
@@ -484,22 +434,10 @@ ButtonInput.propTypes = {
 }
 
 // Display a menu
-class MenuInput extends React.Component {
+class MenuInput extends TooltipComponent {
   constructor (props) {
     super(props)
     this.state = { listoptions: this.makelist(props.options) }
-  }
-
-  componentDidMount () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentDidUpdate () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentWillUnmount () {
-    $('[data-toggle="tooltip"]').tooltip('dispose')
   }
 
   makelist (data) {
@@ -537,7 +475,7 @@ MenuInput.propTypes = {
 }
 
 // Text input box
-class TxtInput extends React.Component {
+class TxtInput extends TooltipComponent {
   constructor (props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
@@ -545,18 +483,6 @@ class TxtInput extends React.Component {
 
   handleChange (e) {
     this.props.onChange(e.target.value)
-  }
-
-  componentDidMount () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentDidUpdate () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentWillUnmount () {
-    $('[data-toggle="tooltip"]').tooltip('dispose')
   }
 
   render () {
@@ -598,7 +524,7 @@ TxtInput.propTypes = {
 // ---------------------
 // ---------------------
 // Display the cost output box
-class CostOutput extends React.Component {
+class CostOutput extends TooltipComponent {
   constructor (props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
@@ -606,14 +532,6 @@ class CostOutput extends React.Component {
 
   handleChange () {
     this.props.onCostChange(this.props.display)
-  }
-
-  componentDidMount () {
-    $('[data-toggle="tooltip"]').tooltip()
-  }
-
-  componentDidUpdate () {
-    $('[data-toggle="tooltip"]').tooltip()
   }
 
   render () {
