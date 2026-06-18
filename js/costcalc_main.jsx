@@ -70,8 +70,8 @@ function sum (obj) {
 }
 
 // Comapare two obj return true is similar
-Object.compare = function (obj1, obj2) {
-  // console.log('in Object.compare', obj1, obj2)
+function deepCompare (obj1, obj2) {
+  console.log('in deepCompare', obj1, obj2)
   if (typeof (obj1) === 'undefined' && typeof (obj2) === 'undefined') {
     return true
   }
@@ -87,7 +87,7 @@ Object.compare = function (obj1, obj2) {
     switch (typeof (obj1[p])) {
       // Deep compare objects
       case 'object':
-        if (!Object.compare(obj1[p], obj2[p])) return false
+        if (!deepCompare(obj1[p], obj2[p])) return false
         break
         // Compare function code
       case 'function':
@@ -105,6 +105,7 @@ Object.compare = function (obj1, obj2) {
   }
   return true
 }
+
 // Generate a random int
 function randomInt (not) {
   let rnd
@@ -1050,7 +1051,7 @@ class ProviderPluginsSelector extends React.Component {
   makeExportcmp (data) {
     // this.state.exportcmp = data
     // console.log('in makeExportcmp', this.state.exportcmp, data)
-    if (!Object.compare(this.state.exportcmp, data)) {
+    if (!deepCompare(this.state.exportcmp, data)) {
       this.setState({ exportcmp: data })
     }
   }
@@ -1390,7 +1391,7 @@ class ManagePlugins extends React.Component {
 
   handleCostChange (n, cost) {
     const newVarsum = this.state.varsum
-    if (!Object.compare(newVarsum[n], cost)) {
+    if (!deepCompare(newVarsum[n], cost)) {
       newVarsum[n] = cost
       this.setState({ varsum: newVarsum })
     }
@@ -1400,8 +1401,8 @@ class ManagePlugins extends React.Component {
 
   makeExportplug (data, n) {
     const newExport = this.state.export
-    // console.log('in ManagerPlugin.makeExportplug', Object.compare(newExport[n], data), this.state.export[n] === data)
-    if (!Object.compare(newExport[n], data)) {
+    // console.log('in ManagerPlugin.makeExportplug', deepCompare(newExport[n], data), this.state.export[n] === data)
+    if (!deepCompare(newExport[n], data)) {
       newExport[n] = data
       this.setState({ export: newExport })
     }
@@ -1475,7 +1476,7 @@ class PluginsMain extends React.Component {
   handleCostChange (name, e) {
     // this.state.varsum[name] = e
     const newVarsum = this.state.varsum
-    // here we are simply comparing numbers, no need for Object.compare()
+    // here we are simply comparing numbers, no need for deepCompare()
     if (newVarsum[name] !== e) {
       newVarsum[name] = e
       this.setState({ varsum: newVarsum })
@@ -1592,7 +1593,7 @@ class Main extends React.Component {
     const tmp = JSON.parse(JSON.stringify(idata))
     let disp = false
     if (!this.init) {
-      if (!Object.compare(tmp, this.state.exportmain.data)) {
+      if (!deepCompare(tmp, this.state.exportmain.data)) {
         disp = true
       }
     }
