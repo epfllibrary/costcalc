@@ -1638,7 +1638,6 @@ PluginsMain.propTypes = {
 // ---------------------
 class Main extends React.Component {
   constructor (props) {
-    MoneyGetRates()
     super(props)
     this.handleCostChange = this.handleCostChange.bind(this)
     this.makeExportmain = this.makeExportmain.bind(this)
@@ -1646,6 +1645,8 @@ class Main extends React.Component {
     this.handleDurationChange = this.handleDurationChange.bind(this)
     this.handleConvMoneyChange = this.handleConvMoneyChange.bind(this)
     this.btnClick = this.btnClick.bind(this)
+
+    MoneyGetRates()
 
     this.state = {
       total: 0,
