@@ -60,6 +60,11 @@ class CurrencySelect extends React.Component {
   }
 
   render () {
+    if (!this.props.ratesLoaded) {
+      return <small className="form-text text-muted">Loading exchange rates...</small>
+    }
+    if (!MoneyEnable) return null
+    
     let r = 0
     let rate = null
     // only display the module if conversion is enable and running ok
@@ -191,30 +196,23 @@ function ConvCurrency (mainCurrency) {
 }
 
 // Init function for downloading the rate from Open Exchange Rates
-/**
- * @return {boolean}
- */
-function MoneyGetRates () {
-  // Load exchange rates data via AJAX:
+function MoneyGetRates (onDone) {
+  console.log('entering MoneyGetRates ()')
   if (MainData.OEXRApi !== '') {
-    $.ajax({
-      // NB: using Open Exchange Rates here, but you can use any source!
-      url: 'https://openexchangerates.org/api/latest.json?app_id=' + MainData.OEXRApi,
-      dataType: 'json',
-      async: false,
-      success: function (data) {
+    fetch('https://openexchangerates.org/api/latest.json?app_id=' + MainData.OEXRApi)
+      .then(r => r.json())
+      .then(data => {
         Money.rates = data.rates
         Money.base = data.base
-      }
-    })
-      .done(function () {
-        console.log('Money data loaded')
         MoneyEnable = true
+        console.log('we have received exchange rates, moving on')
+        onDone()
       })
-      .fail(function () {
-        console.log('Error loading data money')
+      .catch(() => {
         MoneyEnable = false
+        onDone()
       })
+  } else {
+    onDone()
   }
-  return MoneyEnable
 }

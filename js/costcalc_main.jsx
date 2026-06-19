@@ -1567,10 +1567,9 @@ class Main extends React.Component {
     this.handleConvMoneyChange = this.handleConvMoneyChange.bind(this)
     this.btnClick = this.btnClick.bind(this)
 
-    MoneyGetRates()
-
     this.state = {
       total: 0,
+      ratesLoaded: false,
       export: [],
       exportmain: {},
       name: '',
@@ -1579,6 +1578,7 @@ class Main extends React.Component {
     }
     projectduration = this.state.duration
     this.init = true
+    MoneyGetRates(() => this.setState({ ratesLoaded: true }))
   }
 
   componentDidUpdate () {
@@ -1668,7 +1668,7 @@ class Main extends React.Component {
                                    value={this.state.duration.toString()} onChange={this.handleDurationChange}/>
                     </div>
                     <div className="col-3">
-                      <CurrencySelect id="maincurrency" money={this.handleConvMoneyChange}/>
+                      <CurrencySelect id="maincurrency" money={this.handleConvMoneyChange} ratesLoaded={this.state.ratesLoaded}/>
                     </div>
                   </div>
                 </div>
