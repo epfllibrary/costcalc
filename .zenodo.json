@@ -33,6 +33,14 @@
 
     "communities": [
         {"identifier": "epfl"}
-    ]
+    ],
+
+    "related_identifiers": [
+        {
+            "identifier": "https://bbf.enssib.fr/consulter/bbf-2021-00-0000-057",
+            "relation": "isDescribedBy",
+            "resource_type": "publication-article"
+        }
+    ],
 }
 
