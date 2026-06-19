@@ -711,6 +711,22 @@ class CategoryAmountRatesCost extends React.Component {
     this.setState({ Cat: this.props.data.Cat[Object.keys(this.props.data.Cat)[select]] })
   }
 
+  clampAmount(amount) {
+    let AmountMin
+    let AmountMax
+    let AmountStep
+    if (this.state.Adaptive) {
+      AmountMin = this.props.data.AmountMin[this.state.SelectRate]
+      AmountMax = this.props.data.AmountMax[this.state.SelectRate]
+      AmountStep = this.props.data.AmountStep[this.state.SelectRate]
+    } else {
+      AmountMin = this.props.data.AmountMin
+      AmountMax = this.props.data.AmountMax
+      AmountStep = this.props.data.AmountStep
+    }
+    return [Math.min(Math.max(amount, AmountMin), AmountMax), AmountMin, AmountMax, AmountStep]
+  }
+
   makeExport () {
     this.export = [
       { Name: this.props.data.CatName, Value: Object.keys(this.props.data.Cat)[this.state.SelectCat] },
@@ -726,29 +742,9 @@ class CategoryAmountRatesCost extends React.Component {
   }
 
   render () {
-    let AmountMin
-    let AmountMax
-    let AmountStep
-    // let AmountFree
-    if (this.state.Adaptive) {
-      // console.log('this.props.data.AmountMin', this.props.data.AmountMin, 'this.props.data.AmountMax', this.props.data.AmountMax, ' selected rate', this.state.SelectRate)
-      AmountMin = this.props.data.AmountMin[this.state.SelectRate]
-      AmountMax = this.props.data.AmountMax[this.state.SelectRate]
-      AmountStep = this.props.data.AmountStep[this.state.SelectRate]
-      // AmountFree = this.props.data.AmountFree[this.state.SelectRate]
-    } else {
-      AmountMin = this.props.data.AmountMin
-      AmountMax = this.props.data.AmountMax
-      AmountStep = this.props.data.AmountStep
-      // AmountFree = this.props.data.AmountFree
-    }
-    if (this.state.Amount > AmountMax) {
-      this.setState({ Amount: AmountMax })
-    }
-    if (this.state.Amount < AmountMin) {
-      this.setState({ Amount: AmountMin })
-    }
-    // console.log('in render()', this.state.SelectRate, AmountMin, AmountMax, AmountStep, AmountFree)
+    
+    let clampedAmount = this.clampAmount(this.state.Amount)
+
     return (
             <div className="row align-items-center">
               <div className="col-3">
@@ -757,8 +753,8 @@ class CategoryAmountRatesCost extends React.Component {
               </div>
 
               <div className="col-4">
-                <AmountInput id={this.props.id} min={AmountMin.toString()} max={AmountMax.toString()} step={AmountStep.toString()}
-                             value={this.state.Amount.toString()} name={this.props.data.AmountName} unit={this.props.data.AmountUnit} onChange={this.handleAmountChange} />
+                <AmountInput id={this.props.id} min={clampedAmount[0].toString} max={clampedAmount[1].toString()} step={clampedAmount[2].toString()}
+                             value={clampedAmount[0].toString()} name={this.props.data.AmountName} unit={this.props.data.AmountUnit} onChange={this.handleAmountChange} />
               </div>
               <div className="col-4">
                 <SelectorInput id={this.props.id + '-Rates'} name={this.props.data.RateName} options={Object.keys(this.props.data.Rates)} rate={this.state.Rate}
