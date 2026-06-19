@@ -71,7 +71,7 @@ function sum (obj) {
 
 // Comapare two obj return true is similar
 function deepCompare (obj1, obj2) {
-  console.log('in deepCompare', obj1, obj2)
+  // console.log('in deepCompare', obj1, obj2)
   if (typeof (obj1) === 'undefined' && typeof (obj2) === 'undefined') {
     return true
   }
@@ -601,20 +601,7 @@ class AmountRatesCost extends React.Component {
     this.setState({ Rate: this.props.data.Rates[Object.keys(this.props.data.Rates)[select]] })
   }
 
-  makeExport () {
-    this.export = [
-      { Name: 'Amount', Value: this.state.Amount + ' ' + this.props.data.AmountUnit },
-      { Name: this.props.data.RateName, Value: Object.keys(this.props.data.Rates)[this.state.SelectRate] }
-    ]
-    this.props.export(this.export)
-  }
-
-  componentDidUpdate () {
-    this.makeCost(this.state.Amount, this.state.Rate)
-    this.makeExport()
-  }
-
-  render () {
+  clampAmount(amount) {
     let AmountMin
     let AmountMax
     let AmountStep
@@ -627,17 +614,32 @@ class AmountRatesCost extends React.Component {
       AmountMax = this.props.data.AmountMax
       AmountStep = this.props.data.AmountStep
     }
-    if (this.state.Amount > AmountMax) {
-      this.setState({ Amount: AmountMax })
-    }
-    if (this.state.Amount < AmountMin) {
-      this.setState({ Amount: AmountMin })
-    }
+    return [Math.min(Math.max(amount, AmountMin), AmountMax), AmountMin, AmountMax, AmountStep]
+  }
+
+  makeExport () {
+    let clampedAmount = this.clampAmount(this.state.Amount)
+    this.export = [
+      { Name: 'Amount', Value: clampedAmount[0] + ' ' + this.props.data.AmountUnit },
+      { Name: this.props.data.RateName, Value: Object.keys(this.props.data.Rates)[this.state.SelectRate] }
+    ]
+    this.props.export(this.export)
+  }
+
+  componentDidUpdate () {
+    let clampedAmount = this.clampAmount(this.state.Amount)
+    this.makeCost(clampedAmount[0], this.state.Rate)
+    this.makeExport()
+  }
+
+  render () {
+    let clampedAmount = this.clampAmount(this.state.Amount)
+
     return (
             <div className="row align-items-center">
               <div className="col">
-                <AmountInput id={this.props.id} min={AmountMin.toString()} max={AmountMax.toString()}
-                             step={AmountStep.toString()} value={this.state.Amount.toString()} name={this.props.data.AmountName}
+                <AmountInput id={this.props.id} min={clampedAmount[1].toString()} max={clampedAmount[2].toString()}
+                             step={clampedAmount[3].toString()} value={clampedAmount[0].toString()} name={this.props.data.AmountName}
                              unit={this.props.data.AmountUnit} onChange={this.handleAmountChange} tips="Select the desired amount"/>
               </div>
               <div className="col-3">
