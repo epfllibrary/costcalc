@@ -1193,7 +1193,7 @@ class ProviderPluginsSelector extends React.Component {
       case 'CategoryAmountRatesCost' : return CategoryAmountRatesCost
       case 'NoneSelect' : return NoneSelect
       case 'UserCost' : {
-        this.setState(manualname: true)
+        this.setState({manualname: true})
         return UserCost 
       }
     }
