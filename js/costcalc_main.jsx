@@ -1193,9 +1193,9 @@ class ProviderPluginsSelector extends React.Component {
       case 'CategoryAmountRatesCost' : return CategoryAmountRatesCost
       case 'NoneSelect' : return NoneSelect
       case 'UserCost' : {
-        // TODO fixme: the script freezes when the user enters a char in any input field
-        // this.state.manualname = true
-        return UserCost }
+        this.setState(manualname: true)
+        return UserCost 
+      }
     }
   }
 
