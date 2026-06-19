@@ -83,7 +83,7 @@ const Stats = {
 class PopupStats extends React.Component {
   constructor (props) {
     super(props)
-    console.log('PopupStats instance constructed')
+    // console.log('PopupStats instance constructed')
   }
 
   render () {

@@ -1329,7 +1329,7 @@ class ModuleHeader extends React.Component {
 
   makeinfo (keys, selected, Cdata) {
     let name = Cdata.Provider
-    console.log([name])
+    // console.log([name])
     if (name === 'None' && keys[selected] === '') {
       name = 'Select a solution (if applicable)'
       return (<span id="module-provider">{name}</span>)
