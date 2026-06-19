@@ -124,12 +124,12 @@ class ManageExport extends React.Component {
   }
 
   make_copy () {
-    this.fnSelect('export-output')
-    document.execCommand('copy')
-    this.fnDeSelect()
+  const el = document.getElementById('export-output')
+  navigator.clipboard.writeText(el.innerText).then(() => {
     alert('Copied')
     Stats.RecordEvent('Export', 'clipboard', 0)
-  }
+  })
+}
 
   make_output (rdata) {
     const data = this.read_export(rdata, this.state.typexp)
