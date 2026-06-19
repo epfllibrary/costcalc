@@ -1374,15 +1374,17 @@ class ManagePlugins extends React.Component {
 
   handleRmvPlugin (n) {
     $('#' + n.target).modal('hide')
-    const tmp = this.state.displayed
+    let tmp = [...this.state.displayed]
     tmp.splice(n.n, 1)
     this.setState({ displayed: tmp })
     this.handleCostChange(n.n, 0)
-    this.state.export.splice(n.n, 1)
+    tmp = [...this.state.export]
+    tmp.splice(n.n, 1)
+    this.setState({export: tmp})
   }
 
   handleAddPlugin (n) {
-    const tmp = this.state.displayed
+    let tmp = [...this.state.displayed]
     tmp.splice(n + 1, 0, randomInt(this.state.displayed))
     this.setState({ displayed: tmp })
   }
@@ -1783,7 +1785,7 @@ class Main extends React.Component {
   // Define the howto (user guide)
   howto () {
     let curconv = null
-    if (MoneyEnable) {
+    if (this.state.ratesLoaded) {
       curconv =
               <dl className="row">
                 <dt className="col-sm-3">Change Currency</dt>
