@@ -1,6 +1,8 @@
 import js from "@eslint/js";
 import eslintReact from "@eslint-react/eslint-plugin";
 
+import globals from "globals";
+
 export default [
   // 1. Règles recommandées pour JavaScript
   js.configs.recommended,
@@ -11,6 +13,9 @@ export default [
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
+      globals: {
+        ...globals.browser
+      },
       parserOptions: {
         // C'est cette option qui permet à ESLint de comprendre le JSX !
         ecmaFeatures: {
