@@ -71,7 +71,6 @@ function sum (obj) {
 
 // Comapare two obj return true is similar
 function deepCompare (obj1, obj2) {
-  console.log('in deepCompare', obj1, obj2)
   if (typeof (obj1) === 'undefined' && typeof (obj2) === 'undefined') {
     return true
   }
@@ -1491,10 +1490,10 @@ class PluginsMain extends React.Component {
   }
 
   makeExportplug (data, n) {
-    if (this.state.export[n] !== data) {
+    if (!deepCompare(this.state.export[n],data)) {
       // this.state.export[n] = data
       // TODO replace with structuredClone but avoid an infinite loop
-      let newExport = this.state.export
+      let newExport = structuredClone(this.state.export)
       newExport[n] = data
       this.setState({ export: newExport })
     }
