@@ -71,11 +71,17 @@ function sum (obj) {
 
 // Comapare two obj return true is similar
 function deepCompare (obj1, obj2) {
-  // console.log('in deepCompare', obj1, obj2)
+  console.log('in deepCompare', obj1, obj2)
   if (typeof (obj1) === 'undefined' && typeof (obj2) === 'undefined') {
     return true
   }
   if (typeof (obj1) === 'undefined' || typeof (obj2) === 'undefined') {
+    return false
+  }
+  if (obj1 === null && obj2 === null) {
+    return true
+  }
+  if (obj1 === null || obj2 === null) {
     return false
   }
   // Loop through properties in object 1
@@ -1400,7 +1406,7 @@ class ManagePlugins extends React.Component {
   }
 
   makeExportplug (data, n) {
-    const newExport = this.state.export
+    const newExport = structuredClone(this.state.export)
     // console.log('in ManagerPlugin.makeExportplug', deepCompare(newExport[n], data), this.state.export[n] === data)
     if (!deepCompare(newExport[n], data)) {
       newExport[n] = data
@@ -1475,7 +1481,7 @@ class PluginsMain extends React.Component {
 
   handleCostChange (name, e) {
     // this.state.varsum[name] = e
-    const newVarsum = this.state.varsum
+    let newVarsum = structuredClone(this.state.varsum)
     // here we are simply comparing numbers, no need for deepCompare()
     if (newVarsum[name] !== e) {
       newVarsum[name] = e
@@ -1487,7 +1493,8 @@ class PluginsMain extends React.Component {
   makeExportplug (data, n) {
     if (this.state.export[n] !== data) {
       // this.state.export[n] = data
-      const newExport = this.state.export
+      // TODO replace with structuredClone but avoid an infinite loop
+      let newExport = this.state.export
       newExport[n] = data
       this.setState({ export: newExport })
     }
