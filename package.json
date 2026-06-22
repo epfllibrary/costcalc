@@ -18,5 +18,8 @@
     "eslint": "^10.5.0",
     "globals": "^17.6.0",
     "typescript-eslint": "^8.61.1"
+  },
+  "dependencies": {
+    "eslint-plugin-jquery": "^1.5.1"
   }
 }

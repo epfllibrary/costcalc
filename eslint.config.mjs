@@ -14,7 +14,8 @@ export default [
       ecmaVersion: "latest",
       sourceType: "module",
       globals: {
-        ...globals.browser
+        ...globals.browser,
+        ...globals.jquery,
       },
       parserOptions: {
         // C'est cette option qui permet à ESLint de comprendre le JSX !
