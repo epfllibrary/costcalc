@@ -48,14 +48,16 @@ class CurrencySelect extends React.Component {
       this.setState({ Enable: true })
     }
     this.setState({ SelectCur: select })
-    this.setState({ Cur: this.state.Selectable[select] })
+    let newCur = structuredClone(this.state.Selectable[select])
+    this.setState({ Cur: newCur })
     this.moneyset(select)
   }
 
   componentDidUpdate () {
     if (this.state.prevselec !== this.state.SelectCur) {
       this.props.money({ Enable: this.state.Enable, Cur: this.state.Cur })
-      this.setState({ prevselec: this.state.SelectCur })
+      let newPrevSelec = structuredClone(this.state.SelectCur)
+      this.setState({ prevselec: newPrevSelec })
     }
   }
 
@@ -65,13 +67,12 @@ class CurrencySelect extends React.Component {
     }
     if (!MoneyEnable) return null
     
-    let r = 0
-    let rate = null
+    let rate = ''
     // only display the module if conversion is enable and running ok
     if (MoneyEnable) {
       if (this.state.Enable) {
-        r = Money.convert(1).toFixed(2)
-        rate = '1' + MainData.Currency + '=' + r + this.state.Cur
+        let r = Money.convert(1).toFixed(2)
+        rate = '1 ' + MainData.Currency + ' = ' + r + ' ' + this.state.Cur
       }
       return (
                     <SelectorInput id={this.props.id + '-currency'} name="Change Currency" options={this.state.Selectable}
@@ -114,7 +115,8 @@ class PluginsCurrencyChange extends React.Component {
       this.setState({ Enable: true })
     }
     this.setState({ SelectCur: select })
-    this.setState({ Cur: this.state.Selectable[select] })
+    let newCur = structuredClone(this.state.Selectable[select])
+    this.setState({ Cur: newCur })
     this.setState({ prevvalue: -1 })
   }
 
@@ -142,7 +144,8 @@ class PluginsCurrencyChange extends React.Component {
   componentDidUpdate () {
     if (this.state.prevvalue !== this.state.value) {
       this.makecost()
-      this.setState({ prevvalue: this.state.value })
+      let newPrevValue = structuredClone(this.state.value)
+      this.setState({ prevvalue: newPrevValue })
     }
   }
 
@@ -170,11 +173,10 @@ class PluginsCurrencyChange extends React.Component {
   }
 
   render () {
-    let r = 0
     let rate = ''
     if (this.state.Enable) {
-      r = Money(1.00).from(this.state.Cur).to(MainData.Currency).toFixed(2)
-      rate = '1' + this.state.Cur + '=' + r + MainData.Currency
+      let r = Money(1.00).from(this.state.Cur).to(MainData.Currency).toFixed(2)
+      rate = '1 ' + this.state.Cur + ' = ' + r + ' ' + MainData.Currency
     }
     return (
                     <TxtInput id={this.props.id + '-input'} name={this.props.name} placeholder="Cost" tips="Add your own cost calculation here" onChange={this.handleCostChange}
