@@ -1011,7 +1011,7 @@ class ProviderPluginsSelector extends React.Component {
     this.makeExport = this.makeExport.bind(this)
     this.state = {
       selected: '0',
-      keys: this.ProvidersName(props.data),
+      keys: this.providersName(props.data),
       n: '1',
       cost: '0',
       comments: '',
@@ -1205,7 +1205,7 @@ class ProviderPluginsSelector extends React.Component {
     }
   }
 
-  ProvidersName (main) {
+  providersName (main) {
     const data = main.Data
 
     const providers = []
@@ -1427,7 +1427,7 @@ class ManagePlugins extends React.Component {
     return this.state.displayed[index]
   }
   */
-  
+
   giveN () {
     const disp = this.state.displayed
     return disp.length
