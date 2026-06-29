@@ -80,6 +80,34 @@ const Stats = {
   }
 }
 
+
+class KmTools extends React.Component {
+  constructor (props) {
+    super(props)
+  }
+
+  render () {
+    switch (this.props.engine) {
+      case 'matomo':
+        return (
+          <div>
+            <p>
+              We are using a self-hosted version of{' '}
+              <a href="https://matomo.org/">Matomo</a>
+            </p>
+            <p>
+              The data are only stored on our servers at {MainData.StatsURL}
+            </p>
+            <p className="font-weight-bold">
+              The data are only for research purpose and will not be shared my
+              any 3rd party.
+            </p>
+          </div>
+        )
+    }
+  }
+}
+
 class PopupStats extends React.Component {
   constructor (props) {
     super(props)
@@ -216,9 +244,9 @@ class PopupStats extends React.Component {
             aria-labelledby="headingTwo"
             data-parent="#Statskm"
           >
-            <div className="card-body">{this.KmTools()}</div>
-          </div>
+          <div className="card-body"><KmTools engine={Stats.Engine}/></div>
         </div>
+      </div>
         <div className="card">
           <div className="card-header" id="headingThree">
             <h2 className="mb-0">
@@ -240,34 +268,34 @@ class PopupStats extends React.Component {
             aria-labelledby="headingThree"
             data-parent="#Statskm"
           >
-            <div className="card-body">
-              We are developing this tool and would like to know how you use it,
-              in particular which options and categories you are using most in
-              order to improve and update the tools for your needs.
-            </div>
+          <div className="card-body">
+            We are developing this tool and would like to know how you use it,
+            in particular which options and categories you are using most in
+            order to improve and update the tools for your needs.
           </div>
         </div>
-        <div className="card">
-          <div className="card-header" id="headingFour">
-            <h2 className="mb-0">
-              <button
-                className="btn btn-link collapsed"
-                type="button"
-                data-toggle="collapse"
-                data-target="#collapseFour"
-                aria-expanded="false"
-                aria-controls="collapseFour"
-              >
-                Who should I contact for my information ?
-              </button>
-            </h2>
-          </div>
-          <div
-            id="collapseFour"
-            className="collapse"
-            aria-labelledby="headingFour"
-            data-parent="#Statskm"
-          >
+      </div>
+      <div className="card">
+        <div className="card-header" id="headingFour">
+          <h2 className="mb-0">
+            <button
+              className="btn btn-link collapsed"
+              type="button"
+              data-toggle="collapse"
+              data-target="#collapseFour"
+              aria-expanded="false"
+              aria-controls="collapseFour"
+            >
+              Who should I contact for my information ?
+            </button>
+          </h2>
+        </div>
+        <div
+          id="collapseFour"
+          className="collapse"
+          aria-labelledby="headingFour"
+          data-parent="#Statskm"
+        >
             <div className="card-body">
               You can contact us <a href={MainData.StatsContact}>Here</a>
             </div>
@@ -275,27 +303,6 @@ class PopupStats extends React.Component {
         </div>
       </div>
     )
-  }
-
-  KmTools () {
-    switch (Stats.Engine) {
-      case 'matomo':
-        return (
-          <div>
-            <p>
-              We are using a self-hosted version of{' '}
-              <a href="https://matomo.org/">Matomo</a>
-            </p>
-            <p>
-              The data are only stored on our servers at {MainData.StatsURL}
-            </p>
-            <p className="font-weight-bold">
-              The data are only for research purpose and will not be shared my
-              any 3rd party.
-            </p>
-          </div>
-        )
-    }
   }
 }
 
