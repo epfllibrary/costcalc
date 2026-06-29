@@ -308,8 +308,9 @@ class CheckboxInput extends React.Component {
   }
 
   handleChange () {
-    this.setState({ checked: !this.state.checked })
-    this.props.onChange(!this.state.checked)
+    let revertedChecked = !this.state.checked
+    this.setState({ checked: revertedChecked })
+    this.props.onChange(revertedChecked)
   }
 
   render () {
@@ -592,7 +593,7 @@ class AmountRatesCost extends React.Component {
 
     }
     if (typeof this.props.data.Adaptive !== 'undefined' && this.props.data.Adaptive === true) {
-      this.state.Adaptive = true
+      this.setState({ Adaptive: true })
     }
     this.makeExport()
   }
@@ -697,7 +698,7 @@ class CategoryAmountRatesCost extends React.Component {
       Adaptive: false
     }
     if (typeof this.props.data.Adaptive !== 'undefined' && this.props.data.Adaptive === true) {
-      this.state.Adaptive = true
+      this.setState({ Adaptive: true })
     }
     this.makeExport()
   }
