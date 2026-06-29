@@ -1607,7 +1607,8 @@ class Main extends React.Component {
       }
     }
     if ((this.init) || (disp)) {
-      this.setState({ exportmain: { data: tmp, total: toMoney(this.state.total) } })
+      let newExportMain = structuredClone({ data: tmp, total: toMoney(this.state.total) })
+      this.setState({ exportmain: newExportMain })
       this.init = false
     }
   }
