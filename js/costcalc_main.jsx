@@ -143,7 +143,6 @@ class TooltipComponent extends React.Component {
 
 }
 
-
 // Inputs Definition
 // ---------------------
 // ---------------------
@@ -991,6 +990,16 @@ UserCost.propTypes = {
   handleCostChange: PropTypes.func
 }
 
+// ── module scope, outside all classes ──
+// After the class declarations, to be used in ProviderPluginsSelector.render()
+const STYLE_COMPONENTS = {
+  AmountRatesCost,
+  CategoryCost,
+  CategoryAmountRatesCost,
+  NoneSelect,
+  UserCost,
+}
+
 // Combine plugins
 // ---------------------
 // ---------------------
@@ -1031,14 +1040,14 @@ class ProviderPluginsSelector extends React.Component {
   }
 
   handleProviderChange (select) {
-    this.setState({ selected: select })
-    if (select > 0) {
-      this.setState({ showPlus: true })
-    } else {
-      this.setState({ showPlus: false })
-    }
-    this.setState({ Provider: this.props.data.Data[select].Provider })
-    this.setState({ Name: this.props.data.Data[select].Name })
+    this.setState({
+      selected: select,
+      showPlus: select > 0,
+      Provider: this.props.data.Data[select].Provider,
+      Name: this.props.data.Data[select].Name,
+      manualname: this.props.data.Data[select].style === 'UserCost',   // ← moved here, out of the lookup
+    })
+
     this.props.handleCostChange(this.props.n, this.state.cost)
     // Send a provider even when provider change, but not for empty values
     if (this.state.Provider.length) {
@@ -1122,7 +1131,7 @@ class ProviderPluginsSelector extends React.Component {
   render () {
     const selected = this.state.selected
     const Cdata = this.cmpdata(selected)
-    const Cmp = this.cmp2string(Cdata.Style)
+    const Cmp = STYLE_COMPONENTS[Cdata.Style]
     const id = this.props.data.Name.replace(/\s/g, '') + this.props.n
 
     return (
@@ -1188,20 +1197,6 @@ class ProviderPluginsSelector extends React.Component {
       }
     }
     return out
-  }
-
-  // return the correct style fct from the str input
-  cmp2string (str) {
-    switch (str) {
-      case 'AmountRatesCost' : return AmountRatesCost
-      case 'CategoryCost' : return CategoryCost
-      case 'CategoryAmountRatesCost' : return CategoryAmountRatesCost
-      case 'NoneSelect' : return NoneSelect
-      case 'UserCost' : {
-        this.setState({manualname: true})
-        return UserCost 
-      }
-    }
   }
 
   providersName (main) {
