@@ -50,7 +50,7 @@ function toMoney (numeric, currency) {
   if (typeof numeric === 'string') {
     numeric = parseFloat(numeric)
   }
-  let strcur = ''
+  let strcur
   if (currency === undefined) {
     strcur = MainData.Currency
   } else {
@@ -1422,10 +1422,12 @@ class ManagePlugins extends React.Component {
     }
   }
 
+  /*
   giveId (index) {
     return this.state.displayed[index]
   }
-
+  */
+  
   giveN () {
     const disp = this.state.displayed
     return disp.length
