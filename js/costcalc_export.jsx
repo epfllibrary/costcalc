@@ -9,7 +9,6 @@ let Stats
 let ConvCurrency
 
 let projectduration
-let projectname
 
 // This code manages the export part of the engine
 class ManageExport extends React.Component {
@@ -176,7 +175,7 @@ class ManageExport extends React.Component {
                 <tbody>
                   {this.htmltable(data)}
                   <tr className="table-info">
-                    <td>{projectname}</td>
+                    <td>{this.props.projectName}</td>
                     <td> {projectduration} year{disps}</td>
                     <td colSpan={hcol.length - movecol} align="right"><strong>Total Cost</strong></td>
                     <td align="center"><strong>{this.props.data.total}</strong></td>
@@ -207,7 +206,7 @@ class ManageExport extends React.Component {
                 &lt;tbody&gt;<br/>
                 {this.htmlsrctable(data)}
                 &lt;tr &gt;<br/>
-                &lt;td&gt;{projectname}&lt;/td&gt;
+                &lt;td&gt;{this.props.projectName}&lt;/td&gt;
                 &lt;td&gt;{projectduration} year{disps}&lt;/td&gt;
                 &lt;td colSpan={hcol.length - movecol} align=&quot;right&quot;&gt;&lt;strong&gt;Total Cost&lt;/strong&gt;&lt;/td&gt;&lt;td align=&quot;center&quot;&gt;&lt;strong&gt;
                 {this.props.data.total}&lt;/strong&gt;&lt;/td&gt;
@@ -224,14 +223,14 @@ class ManageExport extends React.Component {
   markout (hcol, data) {
     let disps = ''
     if (projectduration > 1) disps = 's'
-    const Head = Array.from({ length: this.cols.length }, (v, k) => '---')
+    const Head = Array.from({ length: this.cols.length }, () => '---')
     let movecol = 3
     let Convcol = null
     if (this.props.conv.Enable) {
       movecol = 4
       Convcol = <span>{ConvCurrency(this.props.data.total)}|</span>
     }
-    const col = Array.from({ length: hcol.length - movecol }, (v, k) => '| ')
+    const col = Array.from({ length: hcol.length - movecol }, () => '| ')
 
     return (
             <div id="htmlexport">
@@ -241,7 +240,7 @@ class ManageExport extends React.Component {
 
                 {this.marktable(data)}
 
-                |{projectname}|{projectduration} year{disps}{col} Total Cost |{this.props.data.total}|{Convcol}<br/>
+                |{this.props.projectName}|{projectduration} year{disps}{col} Total Cost |{this.props.data.total}|{Convcol}<br/>
 
                </code></pre>
             </div>
@@ -257,7 +256,7 @@ class ManageExport extends React.Component {
       movecol = 4
       Convcol = <span>{ConvCurrency(this.props.data.total)},</span>
     }
-    const col = Array.from({ length: hcol.length - movecol }, (v, k) => ',')
+    const col = Array.from({ length: hcol.length - movecol }, () => ',')
 
     return (
             <div id="htmlexport">
@@ -266,7 +265,7 @@ class ManageExport extends React.Component {
 
                 {this.csvtable(data)}
 
-                {projectname},{projectduration} year{disps}{col} Total Cost ,{this.props.data.total},{Convcol}<br/>
+                {this.props.projectName},{projectduration} year{disps}{col} Total Cost ,{this.props.data.total},{Convcol}<br/>
 
               </code></pre>
             </div>
@@ -395,6 +394,7 @@ class ManageExport extends React.Component {
     return output
   }
 
+  /*
   fnSelect (objId) {
     this.fnDeSelect()
     let range
@@ -410,8 +410,13 @@ class ManageExport extends React.Component {
   }
 
   fnDeSelect () {
-    if (document.selection) { document.selection.empty() } else if (window.getSelection) { window.getSelection().removeAllRanges() }
+    if (document.selection) {
+      document.selection.empty()
+    } else if (window.getSelection) {
+      window.getSelection().removeAllRanges()
+    }
   }
+  */
 }
 
 ManageExport.propTypes = {

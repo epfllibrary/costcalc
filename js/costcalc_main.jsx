@@ -1640,7 +1640,7 @@ class Main extends React.Component {
 
                   {this.final_cost(this.state.conv)}
 
-                  <ManageExport data={this.state.exportmain} conv={this.state.conv}/>
+                  <ManageExport data={this.state.exportmain} projectName={this.state.projectName} conv={this.state.conv}/>
 
                   {this.howto()}
                 </div>
