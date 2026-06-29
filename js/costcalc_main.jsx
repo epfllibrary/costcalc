@@ -1,6 +1,5 @@
 'use strict'
 
-let projectname = ''
 let projectduration = 0
 
 // Declarations for entities defined in other scripts
@@ -866,7 +865,7 @@ class NoneSelect extends React.Component {
     */
 
     return (<div className="alert alert-info" id="infotxt">
-                Please select a provider in the list.
+                Please select a tool or platform in the list of available solutions.
             </div>
     )
   }
@@ -1122,8 +1121,8 @@ class ProviderPluginsSelector extends React.Component {
 
   render () {
     const selected = this.state.selected
-    const Cmp = this.cmp2string(this.cmpdata(selected).Style)
     const Cdata = this.cmpdata(selected)
+    const Cmp = this.cmp2string(Cdata.Style)
     const id = this.props.data.Name.replace(/\s/g, '') + this.props.n
 
     return (
@@ -1579,7 +1578,7 @@ class Main extends React.Component {
       ratesLoaded: false,
       export: [],
       exportmain: {},
-      name: '',
+      projectName: '',
       duration: MainData.DefaultDuration,
       conv: { Enable: false, Cur: '' }
     }
@@ -1617,8 +1616,7 @@ class Main extends React.Component {
   }
 
   handleNameChange (name) {
-    this.setState({ name })
-    projectname = name
+    this.setState({ projectName: name })
   }
 
   handleDurationChange (d) {
