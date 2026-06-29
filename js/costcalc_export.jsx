@@ -90,7 +90,7 @@ class ManageExport extends React.Component {
   }
 
   options_btn (opt) {
-    let Namermv = <span/>
+    let Namermv
     if (this.state.rmvempty) {
       Namermv = <span>Display Empty Lines</span>
     } else {
@@ -115,7 +115,8 @@ class ManageExport extends React.Component {
   }
 
   rmvempty () {
-    this.setState({ rmvempty: !this.state.rmvempty })
+    let revertRmvempty = !this.state.rmvempty
+    this.setState({ rmvempty:  revertRmvempty })
     // this.make_export(this.typexp)
   }
 
@@ -353,8 +354,7 @@ class ManageExport extends React.Component {
       const state = rawexport[cat]
       for (let mod = 0; mod < state.length; mod++) {
         if ((!this.state.rmvempty) || (state[mod].Provider !== '')) {
-          let tmp = {}
-          tmp = {
+          let tmp = {
             Category: state[mod].Category,
             Provider: state[mod].Provider,
             Name: state[mod].Name,
