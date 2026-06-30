@@ -88,7 +88,7 @@ class ManageExport extends React.Component {
     )
   }
 
-  options_btn (opt) {
+  options_btn () {
     let Namermv
     if (this.state.rmvempty) {
       Namermv = <span>Display Empty Lines</span>
@@ -132,7 +132,7 @@ class ManageExport extends React.Component {
 }
 
   make_output (rdata) {
-    const data = this.read_export(rdata, this.state.typexp)
+    const data = this.read_export(rdata)
     const hcol = this.cols
     // Generate a stat export
     Stats.RecordEvent('Export', this.state.typexp, 0)
@@ -347,7 +347,7 @@ class ManageExport extends React.Component {
     return items
   }
 
-  read_export (rawexport, n) {
+  read_export (rawexport) {
     const output = []
     for (let cat = 0; cat < rawexport.length; cat++) {
       const state = rawexport[cat]
