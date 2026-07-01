@@ -8,8 +8,6 @@ let ButtonInput
 let Stats
 let ConvCurrency
 
-let projectduration
-
 // This code manages the export part of the engine
 class ManageExport extends React.Component {
   constructor (props) {
@@ -124,14 +122,15 @@ class ManageExport extends React.Component {
   }
 
   make_copy () {
-  const el = document.getElementById('export-output')
-  navigator.clipboard.writeText(el.innerText).then(() => {
-    alert('Copied')
-    Stats.RecordEvent('Export', 'clipboard', 0)
-  })
-}
+    const el = document.getElementById('export-output')
+    navigator.clipboard.writeText(el.innerText).then(() => {
+      alert('Copied')
+      Stats.RecordEvent('Export', 'clipboard', 0)
+    })
+  }
 
   make_output (rdata) {
+    console.log('in make_outout, rdata=', rdata)
     const data = this.read_export(rdata)
     const hcol = this.cols
     // Generate a stat export
@@ -157,7 +156,7 @@ class ManageExport extends React.Component {
   htmlout (hcol, data) {
     let disps = ''
 
-    if (projectduration > 1) disps = 's'
+    if (this.props.projectDuration > 1) disps = 's'
     let movecol = 3
     let Convcol = null
     if (this.props.conv.Enable) {
@@ -176,7 +175,7 @@ class ManageExport extends React.Component {
                   {this.htmltable(data)}
                   <tr className="table-info">
                     <td>{this.props.projectName}</td>
-                    <td> {projectduration} year{disps}</td>
+                    <td> {this.props.projectDuration} year{disps}</td>
                     <td colSpan={hcol.length - movecol} align="right"><strong>Total Cost</strong></td>
                     <td align="center"><strong>{this.props.data.total}</strong></td>
                     {Convcol}
@@ -189,7 +188,7 @@ class ManageExport extends React.Component {
 
   htmlsrcout (hcol, data) {
     let disps = ''
-    if (projectduration > 1) disps = 's'
+    if (this.props.projectDuration > 1) disps = 's'
     let movecol = 3
     let Convcol = null
     if (this.props.conv.Enable) {
@@ -207,7 +206,7 @@ class ManageExport extends React.Component {
                 {this.htmlsrctable(data)}
                 &lt;tr &gt;<br/>
                 &lt;td&gt;{this.props.projectName}&lt;/td&gt;
-                &lt;td&gt;{projectduration} year{disps}&lt;/td&gt;
+                &lt;td&gt;{this.props.projectDuration} year{disps}&lt;/td&gt;
                 &lt;td colSpan={hcol.length - movecol} align=&quot;right&quot;&gt;&lt;strong&gt;Total Cost&lt;/strong&gt;&lt;/td&gt;&lt;td align=&quot;center&quot;&gt;&lt;strong&gt;
                 {this.props.data.total}&lt;/strong&gt;&lt;/td&gt;
                 {Convcol}
@@ -222,7 +221,7 @@ class ManageExport extends React.Component {
 
   markout (hcol, data) {
     let disps = ''
-    if (projectduration > 1) disps = 's'
+    if (this.props.projectDuration > 1) disps = 's'
     const Head = Array.from({ length: this.cols.length }, () => '---')
     let movecol = 3
     let Convcol = null
@@ -240,7 +239,7 @@ class ManageExport extends React.Component {
 
                 {this.marktable(data)}
 
-                |{this.props.projectName}|{projectduration} year{disps}{col} Total Cost |{this.props.data.total}|{Convcol}<br/>
+                |{this.props.projectName}|{this.props.projectDuration} year{disps}{col} Total Cost |{this.props.data.total}|{Convcol}<br/>
 
                </code></pre>
             </div>
@@ -249,7 +248,7 @@ class ManageExport extends React.Component {
 
   csvout (hcol, data) {
     let disps = ''
-    if (projectduration > 1) disps = 's'
+    if (this.props.projectDuration > 1) disps = 's'
     let movecol = 3
     let Convcol = null
     if (this.props.conv.Enable) {
@@ -265,7 +264,7 @@ class ManageExport extends React.Component {
 
                 {this.csvtable(data)}
 
-                {this.props.projectName},{projectduration} year{disps}{col} Total Cost ,{this.props.data.total},{Convcol}<br/>
+                {this.props.projectName},{this.props.projectDuration} year{disps}{col} Total Cost ,{this.props.data.total},{Convcol}<br/>
 
               </code></pre>
             </div>
@@ -348,7 +347,10 @@ class ManageExport extends React.Component {
   }
 
   read_export (rawexport) {
-    const output = []
+    let output = []
+    if (!rawexport) {
+      return []
+    }
     for (let cat = 0; cat < rawexport.length; cat++) {
       const state = rawexport[cat]
       for (let mod = 0; mod < state.length; mod++) {
@@ -421,5 +423,6 @@ class ManageExport extends React.Component {
 
 ManageExport.propTypes = {
   conv: PropTypes.object,
-  data: PropTypes.object
+  data: PropTypes.object,
+  projectDuration: PropTypes.number
 }

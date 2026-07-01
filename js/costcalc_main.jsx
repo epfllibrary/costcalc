@@ -1,7 +1,5 @@
 'use strict'
 
-let projectduration = 0
-
 // Declarations for entities defined in other scripts
 let MainData
 let Stats
@@ -664,7 +662,7 @@ class AmountRatesCost extends React.Component {
     }
 
     let total = (amount - free) * rate
-    if (this.props.data.ByYear) total = total * projectduration
+    if (this.props.data.ByYear) total = total * this.props.projectDuration
     total = toMoney(total)
     this.props.onCostChange(this.props.n, total)
     return total
@@ -676,7 +674,8 @@ AmountRatesCost.propTypes = {
   n: PropTypes.number,
   data: PropTypes.object,
   export: PropTypes.func,
-  onCostChange: PropTypes.func
+  onCostChange: PropTypes.func,
+  projectDuration: PropTypes.number
 }
 
 class CategoryAmountRatesCost extends React.Component {
@@ -771,7 +770,7 @@ class CategoryAmountRatesCost extends React.Component {
   makeCost (cat, amount, rate, free) {
     let total = cat + (amount - free) * rate
     // console.log(cat, '+ (', amount, '-',free,')*', rate, ' = ', total)
-    if (this.props.data.ByYear) total = total * projectduration
+    if (this.props.data.ByYear) total = total * this.props.projectDuration
 
     total = toMoney(total)
     this.props.onCostChange(this.props.n, total)
@@ -784,7 +783,8 @@ CategoryAmountRatesCost.propTypes = {
   n: PropTypes.number,
   data: PropTypes.object,
   export: PropTypes.func,
-  onCostChange: PropTypes.func
+  onCostChange: PropTypes.func,
+  projectDuration: PropTypes.number
 }
 
 class CategoryCost extends React.Component {
@@ -830,7 +830,7 @@ class CategoryCost extends React.Component {
 
   makeCost (cat) {
     let total = cat
-    if (this.props.data.ByYear) total = total * projectduration
+    if (this.props.data.ByYear) total = total * this.props.projectDuration
 
     total = toMoney(total)
     this.props.onCostChange(this.props.n, total)
@@ -844,7 +844,8 @@ CategoryCost.propTypes = {
   data: PropTypes.object,
   export: PropTypes.func,
   onCostChange: PropTypes.func,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  projectDuration: PropTypes.number
 }
 
 class NoneSelect extends React.Component {
@@ -874,7 +875,8 @@ NoneSelect.propTypes = {
   n: PropTypes.number,
   export: PropTypes.func,
   onCostChange: PropTypes.func,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  projectDuration: PropTypes.number
 }
 
 class UserCost extends React.Component {
@@ -903,7 +905,7 @@ class UserCost extends React.Component {
 
   makeCost (byYear, amount) {
     let total = amount
-    if (byYear) total = amount * projectduration
+    if (byYear) total = amount * this.props.projectDuration
     //       this.setState({total:total});
     this.props.onCostChange(this.props.n, toMoney(total))
     return toMoney(total)
@@ -937,7 +939,7 @@ class UserCost extends React.Component {
 
   componentDidUpdate () {
     this.makeCost(this.state.ByYear, this.state.value)
-    // this.makeExport();
+    this.makeExport();
   }
 
   classtxt (error) {
@@ -951,7 +953,7 @@ class UserCost extends React.Component {
   render () {
     let Costname = 'Cost'
     if (this.state.ByYear) Costname = 'Cost by year'
-    this.props.export(this.export)
+    //this.props.export(this.export)
 
     return (
             <div className="container">
@@ -987,7 +989,8 @@ UserCost.propTypes = {
   handlebyYearChange: PropTypes.func,
   handleServiceChange: PropTypes.func,
   handleProviderChange: PropTypes.func,
-  handleCostChange: PropTypes.func
+  handleCostChange: PropTypes.func,
+  projectDuration: PropTypes.number
 }
 
 // ── module scope, outside all classes ──
@@ -1055,9 +1058,17 @@ class ProviderPluginsSelector extends React.Component {
     }
   }
 
-  componentDidUpdate () {
-    this.props.handleCostChange(this.props.n, this.state.cost)
-    this.makeExport()
+  componentDidUpdate (prevProps, prevState) {
+    if (prevState.cost !== this.state.cost) {
+      this.props.handleCostChange(this.props.n, this.state.cost)
+    }
+
+    if (
+      prevState.comments !== this.state.comments ||
+      prevState.exportcmp !== this.state.exportcmp
+    ) {
+      this.makeExport()
+    }
   }
 
   makeExportcmp (data) {
@@ -1094,8 +1105,18 @@ class ProviderPluginsSelector extends React.Component {
   }
 
   // The 3 nexts function are for user input management
-  handleProviderChangetxt (txt) {
-    this.setState({ Provider: txt })
+  //handleProviderChangetxt (txt) {
+  //  this.setState({ Provider: txt })
+  //}
+
+  handleProviderChangetxt(txt) {
+    const keys = [...this.state.keys]
+    keys[this.state.selected] = txt || 'Please select a solution'
+
+    this.setState({
+      Provider: txt,
+      keys
+    })
   }
 
   handleServiceChangetxt (txt) {
@@ -1140,7 +1161,8 @@ class ProviderPluginsSelector extends React.Component {
               <div className="card-header" id={id}>
                 <ModuleHeader id={id} data={this.props.data} selected={selected} Cdata={Cdata} n={this.props.n} Cost={this.state.cost}
                               comments={this.state.comments} handleAddPlugin={this.handleAddPlugin} handleRmvPlugin={this.handleRmvPlugin}
-                              keys={this.state.keys} showMinus={this.props.showMinus} showPlus={this.state.showPlus} conv={this.props.conv}/>
+                              keys={this.state.keys} showMinus={this.props.showMinus} showPlus={this.state.showPlus} conv={this.props.conv}
+                              projectDuration={this.state.projectDuration}/>
               </div>
 
               <div id={'collapse' + id} className="collapse" aria-labelledby={id} data-parent="#accordionplugins">
@@ -1170,7 +1192,7 @@ class ProviderPluginsSelector extends React.Component {
                     <div id="component" className="container bg-light">
                       <Cmp data={Cdata} key={selected} id="component-settings" onCostChange={this.handleCostChange} n={this.props.n}
                            handleProviderChange={this.handleProviderChangetxt} handleServiceChange={this.handleServiceChangetxt} handlebyYearChange={this.handlebyYearChange}
-                           export={this.makeExportcmp}/>
+                           export={this.makeExportcmp} projectDuration={this.props.projectDuration}/>
                     </div>
                   </div>
                 </div>
@@ -1179,23 +1201,14 @@ class ProviderPluginsSelector extends React.Component {
     )
   }
 
-  cmpdata (select) {
-    const out = this.props.data.Data[select]
-    const newKeys = this.state.keys
+  cmpdata(select) {
+    const out = { ...this.props.data.Data[select] }
+
     if (this.state.manualname) {
       out.Name = this.state.Name
       out.ByYear = this.state.manbyyear
-      if (this.state.Provider === '') {
-        newKeys[select] = 'Please select a solution'
-        this.setState({ keys: newKeys })
-      } else {
-        // this.state.keys[select] = this.state.Provider
-        if (this.state.keys[select] !== this.state.Provider) {
-          newKeys[select] = this.state.Provider
-          this.setState({ keys: newKeys })
-        }
-      }
     }
+
     return out
   }
 
@@ -1218,7 +1231,8 @@ ProviderPluginsSelector.propTypes = {
   export: PropTypes.func,
   handleCostChange: PropTypes.func,
   handleAddPlugin: PropTypes.func,
-  handleRmvPlugin: PropTypes.func
+  handleRmvPlugin: PropTypes.func,
+  projectDuration: PropTypes.integer
 }
 
 // Displays the header of a plugin (button +- name cost ...)
@@ -1239,7 +1253,7 @@ class ModuleHeader extends React.Component {
 
   byyear (by) {
     if (by) {
-      return (<span className="txtbyyear">{projectduration} <br/> years</span>)
+      return (<span className="txtbyyear">{this.props.projectDuration} <br/> years</span>)
     } else {
       return (<span></span>)
     }
@@ -1350,7 +1364,8 @@ ModuleHeader.propTypes = {
   handleAddPlugin: PropTypes.func,
   handleRmvPlugin: PropTypes.func,
   conv: PropTypes.object,
-  data: PropTypes.object
+  data: PropTypes.object,
+  projectDuration: PropTypes.number
 }
 
 // displays one kind plugin it manages the add and removes option
@@ -1401,8 +1416,10 @@ class ManagePlugins extends React.Component {
 
   makeExportplug (data, n) {
     const newExport = structuredClone(this.state.export)
-    // console.log('in ManagerPlugin.makeExportplug', deepCompare(newExport[n], data), this.state.export[n] === data)
+    console.log(this.state.export)
+    console.log('in ManagerPlugin.makeExportplug', deepCompare(newExport[n], data), this.state.export[n] === data)
     if (!deepCompare(newExport[n], data)) {
+      console.log('makeExportplug should update this.state.export, data=', data)
       newExport[n] = data
       this.setState({ export: newExport })
     }
@@ -1411,6 +1428,8 @@ class ManagePlugins extends React.Component {
   }
 
   makeExport () {
+    console.log('check length in makeExport', this.state.export.length, this.giveN())
+    console.log(this.state.export, this.props.n)
     if (this.state.export.length === this.giveN()) {
       this.props.export(this.state.export, this.props.n)
     }
@@ -1436,15 +1455,16 @@ class ManagePlugins extends React.Component {
     if (this.giveN() > 1) {
       showMinus = true
     }
-    this.makeExport()
+    // this.makeExport()
     return (
               <div>
                   <Repeat numTimes={this.giveN()}>
                         {(index) => <ProviderPluginsSelector data={this.props.data} key={this.state.displayed[index]}
                                                  showMinus={showMinus} n={index}
+                                                 projectDuration={this.props.projectDuration}
                                                  handleCostChange={this.handleCostChange} handleAddPlugin={this.handleAddPlugin}
-                                                             handleRmvPlugin={this.handleRmvPlugin} export={this.makeExportplug}
-                                                             conv={this.props.conv}/>}
+                                                 handleRmvPlugin={this.handleRmvPlugin} export={this.makeExportplug}
+                                                 conv={this.props.conv}/>}
 
                   </Repeat>
               </div>
@@ -1457,7 +1477,8 @@ ManagePlugins.propTypes = {
   export: PropTypes.func,
   n: PropTypes.number,
   conv: PropTypes.object,
-  data: PropTypes.object
+  data: PropTypes.object,
+  projectDuration: PropTypes.projectDuration
 }
 
 // displays all the plugins defined in the Maindata
@@ -1537,7 +1558,7 @@ class PluginsMain extends React.Component {
                       <Repeat numTimes={this.props.data.length}>
                         {(index) => <ManagePlugins data={this.props.data[index]} key={index}
                                                    export={this.makeExportplug} n={index} handleCostChange={this.handleCostChange}
-                                                   conv={this.props.conv}/>}
+                                                   conv={this.props.conv} projectDuration={this.props.projectDuration}/>}
                       </Repeat>
                     </div>
                   </div>
@@ -1552,7 +1573,8 @@ PluginsMain.propTypes = {
   export: PropTypes.func,
   TotalCost: PropTypes.func,
   conv: PropTypes.object,
-  data: PropTypes.array
+  data: PropTypes.array,
+  projectDuration: PropTypes.projectDuration
 }
 
 // MAIN
@@ -1574,10 +1596,9 @@ class Main extends React.Component {
       export: [],
       exportmain: {},
       projectName: '',
-      duration: MainData.DefaultDuration,
+      projectDuration: MainData.DefaultDuration,
       conv: { Enable: false, Cur: '' }
     }
-    projectduration = this.state.duration
     this.init = true
   }
 
@@ -1597,6 +1618,7 @@ class Main extends React.Component {
 
   makeExportmain (idata) {
     const tmp = JSON.parse(JSON.stringify(idata))
+    console.log('makeExportmain, tmp=', tmp)
     let disp = false
     if (!this.init) {
       if (!deepCompare(tmp, this.state.exportmain.data)) {
@@ -1615,8 +1637,7 @@ class Main extends React.Component {
   }
 
   handleDurationChange (d) {
-    this.setState({ duration: d })
-    projectduration = d
+    this.setState({ projectDuration: d })
   }
 
   handleConvMoneyChange (conv) {
@@ -1628,6 +1649,7 @@ class Main extends React.Component {
   }
 
   render () {
+    console.log('exportmain=', this.state.exportmain)
     return (
             <div id="main">
               <PopupStats />
@@ -1636,11 +1658,14 @@ class Main extends React.Component {
 
                   {this.project_info()}
 
-                  <PluginsMain TotalCost={this.handleCostChange} data={MainData.Data} export={this.makeExportmain} conv={this.state.conv} />
+                  <PluginsMain TotalCost={this.handleCostChange} data={MainData.Data}
+                               export={this.makeExportmain} conv={this.state.conv}
+                               projectDuration={this.state.projectDuration}/>
 
                   {this.final_cost(this.state.conv)}
 
-                  <ManageExport data={this.state.exportmain} projectName={this.state.projectName} conv={this.state.conv}/>
+                  <ManageExport data={this.state.exportmain} projectName={this.state.projectName}
+                                projectDuration={this.state.projectDuration} conv={this.state.conv}/>
 
                   {this.howto()}
                 </div>
@@ -1669,7 +1694,7 @@ class Main extends React.Component {
                     </div>
                     <div className="col-3">
                       <AmountInput id="project-duration" min="1" max="10" step="1" name="Project Duration" unit="year" tips="Select the duration of the project (in year)"
-                                   value={this.state.duration.toString()} onChange={this.handleDurationChange}/>
+                                   value={this.state.projectDuration.toString()} onChange={this.handleDurationChange}/>
                     </div>
                     <div className="col-3">
                       <CurrencySelect id="maincurrency" money={this.handleConvMoneyChange} ratesLoaded={this.state.ratesLoaded}/>
@@ -1685,7 +1710,7 @@ class Main extends React.Component {
   // Display the total cost
   final_cost (conv) {
     let disps = ''
-    if (projectduration > 1) disps = 's'
+    if (this.state.projectDuration > 1) disps = 's'
     let convout = ''
     if (conv.Enable) convout = <CostOutput id="convctotal" class="costoutput" name="Total Cost" value={ConvCurrency(this.state.total)} tips="Converted Total cost for the project"/>
 
@@ -1701,7 +1726,7 @@ class Main extends React.Component {
                       { /* <img className="img-fluid" src="./icon/totalcost.png" width="100"/> */ }
                     </div>
                     <div className="col-5 " id="plugin-name">
-                      <h3>Total Cost for {projectduration} year{disps}</h3>
+                      <h3>Total Cost for {this.state.projectDuration} year{disps}</h3>
                     </div>
                     <div id="plugin-cost" className="col-5  text-right align-self-center">
                       <CostOutput name="Total Cost" id="ctotal" class="costoutput" value={toMoney(this.state.total)} tips="Total cost for the project"/>
