@@ -1163,7 +1163,7 @@ class ProviderPluginsSelector extends React.Component {
                 <ModuleHeader id={id} data={this.props.data} selected={selected} Cdata={Cdata} n={this.props.n} Cost={this.state.cost}
                               comments={this.state.comments} handleAddPlugin={this.handleAddPlugin} handleRmvPlugin={this.handleRmvPlugin}
                               keys={this.state.keys} showMinus={this.props.showMinus} showPlus={this.state.showPlus} conv={this.props.conv}
-                              projectDuration={this.state.projectDuration}/>
+                              projectDuration={this.props.projectDuration}/>
               </div>
 
               <div id={'collapse' + id} className="collapse" aria-labelledby={id} data-parent="#accordionplugins">
@@ -1479,7 +1479,7 @@ ManagePlugins.propTypes = {
   n: PropTypes.number,
   conv: PropTypes.object,
   data: PropTypes.object,
-  projectDuration: PropTypes.projectDuration
+  projectDuration: PropTypes.number
 }
 
 // displays all the plugins defined in the Maindata
@@ -1575,7 +1575,7 @@ PluginsMain.propTypes = {
   TotalCost: PropTypes.func,
   conv: PropTypes.object,
   data: PropTypes.array,
-  projectDuration: PropTypes.projectDuration
+  projectDuration: PropTypes.number
 }
 
 // MAIN
