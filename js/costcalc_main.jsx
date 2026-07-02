@@ -277,7 +277,7 @@ class MakeknowmoreInput extends TooltipComponent {
     if (((data.Url !== ''))) {
       return (<MenuInput name={<img src="icon/info.png" width={this.state.btnsize}/>} options={data.Url}
                                id="btn-plugin-knowmore"
-                               class="btn-primary btn-sm" tips={'Read more about ' + data.Name + ' solutions'}/>)
+                               class="btn-primary btn-sm" tips={'Read more about the ' + data.Name + ' solution'}/>)
     } else {
       return null
     }
