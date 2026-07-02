@@ -83,7 +83,6 @@ function deepCompare (obj1, obj2) {
   // Loop through properties in object 1
   for (const p in obj1) {
     // Check property exists on both objects
-    // if (obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) return false
     if (Object.prototype.hasOwnProperty.call(obj1, p) !== Object.prototype.hasOwnProperty.call(obj2, p)) return false
 
     switch (typeof (obj1[p])) {
@@ -148,6 +147,7 @@ class TooltipComponent extends React.Component {
 class AmountInput extends TooltipComponent {
   constructor (props) {
     super(props)
+
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -190,7 +190,7 @@ AmountInput.propTypes = {
 class SelectorInput extends TooltipComponent {
   constructor (props) {
     super(props)
-    // this.state={listoptions:this.makelist(props.options)};
+    
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -268,23 +268,16 @@ SelectorInput.propTypes = {
 class MakeknowmoreInput extends TooltipComponent {
   constructor (props) {
     super(props)
+
     this.state = { btnsize: 20 }
   }
 
   render () {
     const data = this.props.data
     if (((data.Url !== ''))) {
-      // if (data.Url.length==1){
-      //     return(
-      //         <ButtonHrefInput name={<img src="./icon/info.png" width={this.state.btnsize}/>} url={data.Url[0].Url}
-      //     id="btn-plugin-knowmore"
-      // class="btn-primary btn-sm" tips={"Know more about " + data.Name}/>
-      //     );
-      // }else {
       return (<MenuInput name={<img src="icon/info.png" width={this.state.btnsize}/>} options={data.Url}
                                id="btn-plugin-knowmore"
                                class="btn-primary btn-sm" tips={'Read more about ' + data.Name + ' solutions'}/>)
-      // }
     } else {
       return null
     }
@@ -299,7 +292,9 @@ MakeknowmoreInput.propTypes = {
 class CheckboxInput extends React.Component {
   constructor (props) {
     super(props)
+
     this.handleChange = this.handleChange.bind(this)
+
     this.state = { checked: this.props.defaults }
   }
 
@@ -329,11 +324,6 @@ CheckboxInput.propTypes = {
 
 // Display a btn with link
 class ButtonHrefInput extends TooltipComponent {
-  /*
-  constructor (props) {
-    super(props)
-  }
-  */
 
   render () {
     return (
@@ -353,7 +343,9 @@ ButtonHrefInput.propTypes = {
 class ButtonInputWpop extends TooltipComponent {
   constructor (props) {
     super(props)
+
     this.handleChange = this.handleChange.bind(this)
+
     this.state = { target: 'Modal' + this.props.idp }
   }
 
@@ -407,6 +399,7 @@ ButtonInputWpop.propTypes = {
 class ButtonInput extends TooltipComponent {
   constructor (props) {
     super(props)
+
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -440,6 +433,7 @@ ButtonInput.propTypes = {
 class MenuInput extends TooltipComponent {
   constructor (props) {
     super(props)
+
     this.state = { listoptions: this.makelist(props.options) }
   }
 
@@ -481,6 +475,7 @@ MenuInput.propTypes = {
 class TxtInput extends TooltipComponent {
   constructor (props) {
     super(props)
+
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -530,6 +525,7 @@ TxtInput.propTypes = {
 class CostOutput extends TooltipComponent {
   constructor (props) {
     super(props)
+
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -579,18 +575,17 @@ Textoutput.propTypes = {
 class AmountRatesCost extends React.Component {
   constructor (props) {
     super(props)
+
     this.handleAmountChange = this.handleAmountChange.bind(this)
     this.handleRateChange = this.handleRateChange.bind(this)
+
     this.state = {
       Amount: '1',
       SelectRate: '0',
       Rate: this.props.data.Rates[Object.keys(this.props.data.Rates)[0]],
-      Adaptive: false
+      Adaptive: false  || (typeof this.props.data.Adaptive !== 'undefined' && this.props.data.Adaptive)
+    }
 
-    }
-    if (typeof this.props.data.Adaptive !== 'undefined' && this.props.data.Adaptive === true) {
-      this.setState({ Adaptive: true })
-    }
     this.makeExport()
   }
 
@@ -599,8 +594,8 @@ class AmountRatesCost extends React.Component {
   }
 
   handleRateChange (select) {
-    this.setState({ SelectRate: select })
-    this.setState({ Rate: this.props.data.Rates[Object.keys(this.props.data.Rates)[select]] })
+    this.setState({ SelectRate: select,
+                    Rate: this.props.data.Rates[Object.keys(this.props.data.Rates)[select]] })
   }
 
   clampAmount(amount) {
@@ -681,10 +676,11 @@ AmountRatesCost.propTypes = {
 class CategoryAmountRatesCost extends React.Component {
   constructor (props) {
     super(props)
+
     this.handleCatChange = this.handleCatChange.bind(this)
     this.handleAmountChange = this.handleAmountChange.bind(this)
     this.handleRateChange = this.handleRateChange.bind(this)
-    // console.log('in constructor', this.props.data.Rates)
+    
     this.state = {
       SelectCat: '0',
       Cat: this.props.data.Cat[Object.keys(this.props.data.Cat)[0]],
@@ -692,11 +688,9 @@ class CategoryAmountRatesCost extends React.Component {
       SelectRate: '0',
       Rate: this.props.data.Rates[Object.keys(this.props.data.Rates)[0]],
       Free: 0,
-      Adaptive: false
+      Adaptive: false || (typeof this.props.data.Adaptive !== 'undefined' && this.props.data.Adaptive)
     }
-    if (typeof this.props.data.Adaptive !== 'undefined' && this.props.data.Adaptive === true) {
-      this.setState({ Adaptive: true })
-    }
+
     this.makeExport()
   }
 
@@ -705,13 +699,13 @@ class CategoryAmountRatesCost extends React.Component {
   }
 
   handleRateChange (select) {
-    this.setState({ SelectRate: select })
-    this.setState({ Rate: this.props.data.Rates[Object.keys(this.props.data.Rates)[select]] })
+    this.setState({ SelectRate: select,
+                    Rate: this.props.data.Rates[Object.keys(this.props.data.Rates)[select]] })
   }
 
   handleCatChange (select) {
-    this.setState({ SelectCat: select })
-    this.setState({ Cat: this.props.data.Cat[Object.keys(this.props.data.Cat)[select]] })
+    this.setState({ SelectCat: select,
+                    Cat: this.props.data.Cat[Object.keys(this.props.data.Cat)[select]] })
   }
 
   clampAmount(amount) {
@@ -769,7 +763,6 @@ class CategoryAmountRatesCost extends React.Component {
 
   makeCost (cat, amount, rate, free) {
     let total = cat + (amount - free) * rate
-    // console.log(cat, '+ (', amount, '-',free,')*', rate, ' = ', total)
     if (this.props.data.ByYear) total = total * this.props.projectDuration
 
     total = toMoney(total)
@@ -790,18 +783,20 @@ CategoryAmountRatesCost.propTypes = {
 class CategoryCost extends React.Component {
   constructor (props) {
     super(props)
+
     this.handleCatChange = this.handleCatChange.bind(this)
 
     this.state = {
       SelectCat: '0',
       Cat: this.props.data.Cat[Object.keys(this.props.data.Cat)[0]]
     }
+
     this.makeExport()
   }
 
   handleCatChange (select) {
-    this.setState({ SelectCat: select })
-    this.setState({ Cat: this.props.data.Cat[Object.keys(this.props.data.Cat)[select]] })
+    this.setState({ SelectCat: select,
+                    Cat: this.props.data.Cat[Object.keys(this.props.data.Cat)[select]] })
   }
 
   makeExport () {
@@ -851,6 +846,7 @@ CategoryCost.propTypes = {
 class NoneSelect extends React.Component {
   constructor (props) {
     super(props)
+
     this.export = []
     const Cost = toMoney(0)
     this.props.onCostChange(this.props.n, Cost)
@@ -882,6 +878,7 @@ NoneSelect.propTypes = {
 class UserCost extends React.Component {
   constructor (props) {
     super(props)
+
     this.handleCostChange = this.handleCostChange.bind(this)
     this.handleProviderChange = this.handleProviderChange.bind(this)
     this.handleServiceChange = this.handleServiceChange.bind(this)
@@ -906,7 +903,6 @@ class UserCost extends React.Component {
   makeCost (byYear, amount) {
     let total = amount
     if (byYear) total = amount * this.props.projectDuration
-    //       this.setState({total:total});
     this.props.onCostChange(this.props.n, toMoney(total))
     return toMoney(total)
   }
@@ -953,8 +949,7 @@ class UserCost extends React.Component {
   render () {
     let Costname = 'Cost'
     if (this.state.ByYear) Costname = 'Cost by year'
-    //this.props.export(this.export)
-
+    
     return (
             <div className="container">
               <div className="row align-items-baseline">
@@ -1010,6 +1005,7 @@ const STYLE_COMPONENTS = {
 class ProviderPluginsSelector extends React.Component {
   constructor (props) {
     super(props)
+
     this.handleCostChange = this.handleCostChange.bind(this)
     this.handleProviderChange = this.handleProviderChange.bind(this)
     this.handleCommentChange = this.handleCommentChange.bind(this)
@@ -1020,6 +1016,7 @@ class ProviderPluginsSelector extends React.Component {
     this.handlebyYearChange = this.handlebyYearChange.bind(this)
     this.makeExportcmp = this.makeExportcmp.bind(this)
     this.makeExport = this.makeExport.bind(this)
+
     this.state = {
       selected: '0',
       keys: this.providersName(props.data),
@@ -1048,7 +1045,7 @@ class ProviderPluginsSelector extends React.Component {
       showPlus: select > 0,
       Provider: this.props.data.Data[select].Provider,
       Name: this.props.data.Data[select].Name,
-      manualname: this.props.data.Data[select].style === 'UserCost',   // ← moved here, out of the lookup
+      manualname: this.props.data.Data[select].style === 'UserCost'
     })
 
     this.props.handleCostChange(this.props.n, this.state.cost)
@@ -1073,8 +1070,6 @@ class ProviderPluginsSelector extends React.Component {
   }
 
   makeExportcmp (data) {
-    // this.state.exportcmp = data
-    // console.log('in makeExportcmp', this.state.exportcmp, data)
     if (!deepCompare(this.state.exportcmp, data)) {
       this.setState({ exportcmp: data })
     }
@@ -1106,9 +1101,6 @@ class ProviderPluginsSelector extends React.Component {
   }
 
   // The 3 nexts function are for user input management
-  //handleProviderChangetxt (txt) {
-  //  this.setState({ Provider: txt })
-  //}
 
   handleProviderChangetxt(txt) {
     const keys = [...this.state.keys]
@@ -1240,6 +1232,7 @@ ProviderPluginsSelector.propTypes = {
 class ModuleHeader extends React.Component {
   constructor (props) {
     super(props)
+
     this.handleAddPlugin = this.handleAddPlugin.bind(this)
     this.handleRmvPlugin = this.handleRmvPlugin.bind(this)
   }
@@ -1340,7 +1333,7 @@ class ModuleHeader extends React.Component {
 
   makeinfo (keys, selected, Cdata) {
     let name = Cdata.Provider
-    // console.log([name])
+    
     if (name === 'None' && keys[selected] === '') {
       name = 'Select a solution (if applicable)'
       return (<span id="module-provider">{name}</span>)
@@ -1373,6 +1366,7 @@ ModuleHeader.propTypes = {
 class ManagePlugins extends React.Component {
   constructor (props) {
     super(props)
+
     this.handleCostChange = this.handleCostChange.bind(this)
     this.handleAddPlugin = this.handleAddPlugin.bind(this)
     this.handleRmvPlugin = this.handleRmvPlugin.bind(this)
@@ -1411,7 +1405,6 @@ class ManagePlugins extends React.Component {
       newVarsum[n] = cost
       this.setState({ varsum: newVarsum })
     }
-    // this.state.varsum[n] = cost
     this.props.handleCostChange(this.props.n, sum(this.state.varsum))
   }
 
@@ -1424,7 +1417,6 @@ class ManagePlugins extends React.Component {
       newExport[n] = data
       this.setState({ export: newExport })
     }
-    // this.state.export[n] = data
     this.makeExport()
   }
 
@@ -1435,12 +1427,6 @@ class ManagePlugins extends React.Component {
       this.props.export(this.state.export, this.props.n)
     }
   }
-
-  /*
-  giveId (index) {
-    return this.state.displayed[index]
-  }
-  */
 
   giveN () {
     const disp = this.state.displayed
@@ -1456,7 +1442,7 @@ class ManagePlugins extends React.Component {
     if (this.giveN() > 1) {
       showMinus = true
     }
-    // this.makeExport()
+    
     return (
               <div>
                   <Repeat numTimes={this.giveN()}>
@@ -1486,8 +1472,8 @@ ManagePlugins.propTypes = {
 class PluginsMain extends React.Component {
   constructor (props) {
     super(props)
-    this.handleCostChange = this.handleCostChange.bind(this)
 
+    this.handleCostChange = this.handleCostChange.bind(this)
     this.makeExportplug = this.makeExportplug.bind(this)
     this.makeExport = this.makeExport.bind(this)
 
@@ -1498,7 +1484,6 @@ class PluginsMain extends React.Component {
   }
 
   handleCostChange (name, e) {
-    // this.state.varsum[name] = e
     let newVarsum = structuredClone(this.state.varsum)
     // here we are simply comparing numbers, no need for deepCompare()
     if (newVarsum[name] !== e) {
@@ -1510,8 +1495,6 @@ class PluginsMain extends React.Component {
 
   makeExportplug (data, n) {
     if (!deepCompare(this.state.export[n],data)) {
-      // this.state.export[n] = data
-      // TODO replace with structuredClone but avoid an infinite loop
       let newExport = structuredClone(this.state.export)
       newExport[n] = data
       this.setState({ export: newExport })
@@ -1584,6 +1567,7 @@ PluginsMain.propTypes = {
 class Main extends React.Component {
   constructor (props) {
     super(props)
+
     this.handleCostChange = this.handleCostChange.bind(this)
     this.makeExportmain = this.makeExportmain.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
@@ -1724,7 +1708,7 @@ class Main extends React.Component {
                     <div className="col-1">
                     </div>
                     <div className="col-1">
-                      { /* <img className="img-fluid" src="./icon/totalcost.png" width="100"/> */ }
+                      { <img className="img-fluid" src="icon/totalcost.png" width="60"/> }
                     </div>
                     <div className="col-5 " id="plugin-name">
                       <h3>Total Cost for {this.state.projectDuration} year{disps}</h3>
@@ -1909,7 +1893,7 @@ class Main extends React.Component {
             </div>)
   }
 
-  // Function use by the howto btn to move the page
+  // Function used by the howto btn to move the page
   move2howto () {
     Stats.RecordEvent('Options', 'howtobtn', 0)
     $('html,body').animate({ scrollTop: $('#howto').offset().top }, 'slow')
@@ -1922,10 +1906,10 @@ class Main extends React.Component {
 // ---------------------
 // ---------------------
 const container = document.getElementById('root')
-const root = ReactDOM.createRoot(container) // createRoot(container!) if you use TypeScript
+const root = ReactDOM.createRoot(container)
 root.render(<Main />)
 
 // Display the stats popup after 10s
 if (Stats.Enable) { setTimeout(function () { $('#PopupStats').modal('show') }, 10000) }
-// Enable tooltip
+// Enable tooltips
 $('[data-toggle="tooltip"]').tooltip()
