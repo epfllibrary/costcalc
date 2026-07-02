@@ -1410,10 +1410,7 @@ class ManagePlugins extends React.Component {
 
   makeExportplug (data, n) {
     const newExport = structuredClone(this.state.export)
-    console.log(this.state.export)
-    console.log('in ManagerPlugin.makeExportplug', deepCompare(newExport[n], data), this.state.export[n] === data)
     if (!deepCompare(newExport[n], data)) {
-      console.log('makeExportplug should update this.state.export, data=', data)
       newExport[n] = data
       this.setState({ export: newExport })
     }
@@ -1421,8 +1418,6 @@ class ManagePlugins extends React.Component {
   }
 
   makeExport () {
-    console.log('check length in makeExport', this.state.export.length, this.giveN())
-    console.log(this.state.export, this.props.n)
     if (this.state.export.length === this.giveN()) {
       this.props.export(this.state.export, this.props.n)
     }
@@ -1603,7 +1598,7 @@ class Main extends React.Component {
 
   makeExportmain (idata) {
     const tmp = JSON.parse(JSON.stringify(idata))
-    console.log('makeExportmain, tmp=', tmp)
+    
     let disp = false
     if (!this.init) {
       if (!deepCompare(tmp, this.state.exportmain.data)) {
@@ -1634,7 +1629,6 @@ class Main extends React.Component {
   }
 
   render () {
-    console.log('exportmain=', this.state.exportmain)
     return (
             <div id="main">
               <PopupStats />
@@ -1736,7 +1730,7 @@ class Main extends React.Component {
                        onClick={() => this.btnClick('feedbackbtn', 0)} rel="noreferrer">
                             Send feedback</a>
     }
-    if (MainData.InstLogo != null && MainData.InstLogo !== '') { imglogo = <img src={'./icon/' + MainData.InstLogo} width={MainData.InstLogoWidth}/> }
+    if (MainData.InstLogo != null && MainData.InstLogo !== '') { imglogo = <img src={'icon/' + MainData.InstLogo} width={MainData.InstLogoWidth}/> }
     return (
             <div className="jumbotron jumbotron-fluid" id="page_head">
               <div className="container">
@@ -1884,7 +1878,6 @@ class Main extends React.Component {
                       Click on the  <ButtonInput class="btn-secondary" id="btn-export" name={<span>Copy to Clipboard</span>} tips="Copy the output into your clipboard"
                                                  onClick={this.fctnull}/> in order to copy your work into your clipboard.
                       A simple <kbd>Paste</kbd> will transfer your work into any software.
-
                     </dd>
                   </dl>
 
