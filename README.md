@@ -37,6 +37,71 @@ The project is hosted on Zenodo : [![DOI](https://zenodo.org/badge/DOI/10.5281/z
 
 The citation information are in the __CITATION__ file and __CODEMETA.json__.
 
+## Development information
+
+`js/costcalc_main.jsx` is the main entry point. It also defines and uses most React components that call each other.
+
+```
+Main
+├── page_head()
+│   ├── ButtonHrefInput?         (Help / Feedback buttons)
+│   └── Static content
+│
+├── project_info()
+│   ├── TxtInput                 (Project name)
+│   ├── AmountInput              (Project duration)
+│   ├── CurrencySelect?          (external component, if rates loaded)
+│   └── PluginsMain
+│       ├── Repeat (for each category in MainData.Data)
+│       │   └── ManagePlugins
+│       │       ├── Repeat (for each duplicated line in category)
+│       │       │   └── ProviderPluginsSelector
+│       │       │       ├── ModuleHeader
+│       │       │       │   ├── ButtonInput?       (+ add line)
+│       │       │       │   ├── ButtonInputWpop?   (- remove line)
+│       │       │       │   └── CostOutput
+│       │       │       │
+│       │       │       ├── SelectorInput          (provider selector)
+│       │       │       ├── Dynamic plugin (STYLE_COMPONENTS)
+│       │       │       │   ├── AmountRatesCost
+│       │       │       │   │   ├── AmountInput
+│       │       │       │   │   ├── SelectorInput
+│       │       │       │   │   └── CostOutput
+│       │       │       │   │
+│       │       │       │   ├── CategoryAmountRatesCost
+│       │       │       │   │   ├── SelectorInput   (category)
+│       │       │       │   │   ├── AmountInput
+│       │       │       │   │   ├── SelectorInput   (rate)
+│       │       │       │   │   └── CostOutput
+│       │       │       │   │
+│       │       │       │   ├── CategoryCost
+│       │       │       │   │   ├── SelectorInput
+│       │       │       │   │   └── CostOutput
+│       │       │       │   │
+│       │       │       │   ├── UserCost
+│       │       │       │   │   ├── TxtInput        (provider)
+│       │       │       │   │   ├── TxtInput        (service)
+│       │       │       │   │   ├── CheckboxInput   (by year)
+│       │       │       │   │   └── CostOutput
+│       │       │       │   │
+│       │       │       │   └── NoneSelect
+│       │       │       │       └── Textoutput
+│       │       │       │
+│       │       │       ├── TxtInput                (comments)
+│       │       │       └── MakeknowmoreInput?
+│
+├── final_cost()
+│   ├── CostOutput               (Total)
+│   └── ConvCurrency?            (external component)
+│
+├── howto()
+│   ├── ButtonInput              (demo add/remove buttons)
+│   └── Static instructional content
+│
+└── page_foot()
+    └── Static footer content
+```
+
 ## License and Term of Usage
 
 This project is release under the GNU GPLv3 license, see __LICENSE__.
