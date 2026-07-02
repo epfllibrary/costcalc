@@ -1065,7 +1065,8 @@ class ProviderPluginsSelector extends React.Component {
 
     if (
       prevState.comments !== this.state.comments ||
-      prevState.exportcmp !== this.state.exportcmp
+      prevState.exportcmp !== this.state.exportcmp ||
+      prevState.cost !== this.state.cost
     ) {
       this.makeExport()
     }
