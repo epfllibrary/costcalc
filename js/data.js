@@ -31,7 +31,7 @@ const NasEpfl = {
 const RcpEpfl = {
   Style: 'AmountRatesCost',
   Provider: 'EPFL-VPA-RCP',
-  Name: 'Collaborative Storage – NAS-RCP',
+  Name: 'Collaborative Storage – RCP-NAS',
   Url: [{
     Name: 'RCP service description',
     Url: 'https://www.epfl.ch/research/facilities/rcp/collaborative-storage-nas-rcp-service-description/'
@@ -48,7 +48,9 @@ const RcpEpfl = {
   AmountFreeCumulative: false,
   RateName: 'Performance',
   Rates: {
-    Standard: 20.75
+    'User fee 1 (for EPFL: direct costs only)': 20.75,
+    'User fee 2 (incl. infrastructure maintenance': 91.79,
+    'User fee 3 (incl. all direct and indirect costs': 113.32,
   },
   RateUnit: 'CHF / TB'
 }
@@ -173,13 +175,12 @@ const DropboxPerso = {
   ExtraInfo: 'Dropbox must not be used for confidential data as the data are stored outside of Switzerland',
   ExtraInfoUrl: 'https://support.epfl.ch/kb_view_customer.do?sysparm_article=KB0012882',
   Url: [
-    { Name: 'Dropbox', Url: 'https://www.dropbox.com/plans?trigger=nr' }
+    { Name: 'Dropbox', Url: 'https://www.dropbox.com/plus' }
   ],
   CatName: 'Plan',
   Cat: {
-    'Personal Free 2Go': 0,
-    'Personal Plus 2TB': 107,
-    'Essentials (3TB)': 193
+    'Personal Free (2Go)': 0,
+    'Personal Plus (2TB)': 96
   },
   CatUnit: 'CHF'
 }
@@ -193,7 +194,7 @@ const DropboxTeam = {
   ExtraInfoUrl: 'https://support.epfl.ch/kb_view_customer.do?sysparm_article=KB0012882',
   Url: [{
     Name: 'Dropbox',
-    Url: 'https://www.dropbox.com/plans?trigger=nr'
+    Url: 'https://www.dropbox.com/plans'
   }],
   Adaptive: false,
   AmountName: 'Number of Users',
@@ -205,10 +206,10 @@ const DropboxTeam = {
   AmountFreeCumulative: false,
   RateName: 'Plan',
   Rates: {
-    'Business (9TB)': 172,
-    'Business Plus (15TB)': 214
+    'Standard (15TB)': 115,
+    'Advanced (over 15TB)': 173
   },
-  RateUnit: 'CHF / User'
+  RateUnit: 'USD / User'
 }
 
 // ELN
@@ -275,15 +276,30 @@ const OpenBIS = {
 
 const Rspace = {
   Style: 'CategoryCost',
-  Provider: 'Rspace community',
-  Name: 'Rspace',
+  Provider: 'Rspace',
+  Name: 'Rspace Community',
   ByYear: true,
   Url: [
-    { Name: 'Rspace Website', Url: 'https://www.researchspace.com/' }
+    { Name: 'Rspace Website', Url: 'https://www.researchspace.com/community' }
   ],
   CatName: 'Options',
   Cat: {
-    'Cloud Based unlimited storage and user': 0
+    'Hosting and storage provided by the user': 0
+  },
+  CatUnit: 'CHF'
+}
+
+const RspaceAcademia = {
+  Style: 'CategoryCost',
+  Provider: 'Rspace',
+  Name: 'Rspace Academia',
+  ByYear: true,
+  Url: [
+    { Name: 'Rspace Website', Url: 'https://www.researchspace.com/pricing' }
+  ],
+  CatName: 'Options',
+  Cat: {
+    'Up to 15 users': 4000
   },
   CatUnit: 'CHF'
 }
@@ -309,7 +325,7 @@ const Benchling = {
 const MysqlEpfl = {
   Style: 'CategoryCost',
   Provider: 'EPFL-VPO-DSI',
-  Name: 'MySql',
+  Name: 'MySQL MariaDB',
   ByYear: true,
   Adaptive: false,
   Url: [
@@ -317,7 +333,23 @@ const MysqlEpfl = {
   ],
   CatName: 'Options',
   Cat: {
-    'MySQL max 2GB': 0
+    'MariaDB max 2GB': 0
+  },
+  CatUnit: 'CHF'
+}
+
+const PostgresEpfl = {
+  Style: 'CategoryCost',
+  Provider: 'EPFL-VPO-DSI',
+  Name: 'PostgreSQL',
+  ByYear: true,
+  Adaptive: false,
+  Url: [
+    { Name: 'EPFL DSI ', Url: 'https://support.epfl.ch/epfl?id=epfl_kb_article_view&sys_kb_id=ba8641a7c3ec4350f269bfac050131ae' }
+  ],
+  CatName: 'Options',
+  Cat: {
+    'PostgreSQL': 0
   },
   CatUnit: 'CHF'
 }
@@ -345,11 +377,12 @@ const GitlabEPFL = {
   Provider: 'EPFL-VPO-DSI',
   Name: 'Gitlab EPFL',
   Url: [
-    { Name: 'Gitlab EPFL', Url: 'https://gitlab.epfl.ch/' }
+      { Name: 'Gitlab EPFL', Url: 'https://gitlab.epfl.ch/' },
+      { Name: 'Service information', Url: 'https://support.epfl.ch/epfl?id=epfl_kb_article_view&sys_kb_id=51ac94d997433290e55e370f2153af97'}
   ],
   ByYear: true,
   Adaptive: false,
-  ExtraInfo: 'A Gitlab server is operated by DSI staff at EPFL',
+  ExtraInfo: 'Gitlab server is operated by EPFL DSI',
   CatName: 'Options',
   Cat: {
     'Free for text file': 0
@@ -614,6 +647,7 @@ const ELN = {
     ELNEpfl,
     OpenBIS,
     Rspace,
+    RspaceAcademia,
     Benchling,
     UserCostSelect
   ]
@@ -625,6 +659,7 @@ const Database = {
   Url: '',
   Data: [NoneSelected,
     MysqlEpfl,
+    PostgresEpfl,
     UserCostSelect
   ]
 }
