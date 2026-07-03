@@ -898,6 +898,19 @@ class UserCost extends React.Component {
     return toMoney(total)
   }
 
+  makeExport () {
+    const out = {
+      Category: this.props.data.Name,
+      Provider: this.state.Provider,
+      Name: this.state.Name,
+      Comments: this.state.comments,
+      ExportCmp: this.state.exportcmp,
+      Cost: this.state.cost
+    }
+
+    this.props.export(out, this.props.n)
+  }
+
   handleCostChange (value) {
     this.setState({ value })
   }
@@ -927,6 +940,10 @@ class UserCost extends React.Component {
   componentDidUpdate () {
     this.makeCost(this.state.ByYear, this.state.value)
     this.makeExport();
+  }
+
+  makeExport() {
+
   }
 
   classtxt (error) {
