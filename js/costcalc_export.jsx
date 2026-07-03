@@ -130,7 +130,6 @@ class ManageExport extends React.Component {
   }
 
   make_output (rdata) {
-    console.log('in make_outout, rdata=', rdata)
     const data = this.read_export(rdata)
     const hcol = this.cols
     // Generate a stat export

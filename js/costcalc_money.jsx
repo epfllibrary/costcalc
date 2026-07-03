@@ -207,7 +207,6 @@ function MoneyGetRates (onDone) {
         Money.rates = data.rates
         Money.base = data.base
         MoneyEnable = true
-        console.log('we have received exchange rates, moving on')
         onDone()
       })
       .catch(() => {
