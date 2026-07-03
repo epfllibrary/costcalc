@@ -523,15 +523,6 @@ TxtInput.propTypes = {
 // ---------------------
 // Display the cost output box
 class CostOutput extends TooltipComponent {
-  constructor (props) {
-    super(props)
-
-    this.handleChange = this.handleChange.bind(this)
-  }
-
-  handleChange () {
-    this.props.onCostChange(this.props.display)
-  }
 
   render () {
     const classN = 'form-control ' + this.props.class
@@ -540,7 +531,7 @@ class CostOutput extends TooltipComponent {
               <label htmlFor={this.props.id} className={'col-form-label'}>{this.props.name}</label>
               <div className="col align-self-center">
                 <input type={'text'} id={this.props.id} className={classN}
-                       value={this.props.value} onChange={this.handleChange} readOnly data-toggle="tooltip" data-placement="top" title={this.props.tips}/>
+                       value={this.props.value} readOnly data-toggle="tooltip" data-placement="top" title={this.props.tips}/>
               </div>
             </div>
     )
@@ -750,7 +741,7 @@ class CategoryAmountRatesCost extends React.Component {
               </div>
 
               <div className="col-4">
-                <AmountInput id={this.props.id} min={clampedAmount[0].toString} max={clampedAmount[1].toString()} step={clampedAmount[2].toString()}
+                <AmountInput id={this.props.id} min={clampedAmount[1].toString()} max={clampedAmount[2].toString()} step={clampedAmount[3].toString()}
                              value={clampedAmount[0].toString()} name={this.props.data.AmountName} unit={this.props.data.AmountUnit} onChange={this.handleAmountChange} />
               </div>
               <div className="col-4">
@@ -1405,7 +1396,7 @@ class ManagePlugins extends React.Component {
       newVarsum[n] = cost
       this.setState({ varsum: newVarsum })
     }
-    this.props.handleCostChange(this.props.n, sum(this.state.varsum))
+    this.props.handleCostChange(this.props.n, sum(newVarsum))
   }
 
   makeExportplug (data, n) {
@@ -1485,7 +1476,7 @@ class PluginsMain extends React.Component {
       newVarsum[name] = e
       this.setState({ varsum: newVarsum })
     }
-    this.props.TotalCost(sum(this.state.varsum))
+    this.props.TotalCost(sum(newVarsum))
   }
 
   makeExportplug (data, n) {
