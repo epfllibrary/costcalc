@@ -409,8 +409,8 @@ const Github = {
   RateName: 'Plan',
   Rates: {
     Free: 0,
-    Team: 43,
-    Enterprise: 225
+    Team: 38,
+    Enterprise: 202
   },
   RateUnit: 'CHF / Users'
 }
@@ -435,8 +435,8 @@ const Bitbucket = {
   RateName: 'Plan',
   Rates: {
     'Free (up to 5 users)': 0,
-    'Standard for growing teams (min 5 users)': 32,
-    'Premium for large teams (min 5 users)': 64
+    'Standard for growing teams (min 5 users)': 35,
+    'Premium for large teams (min 5 users)': 70
   },
   RateUnit: 'CHF / Users'
 }
@@ -460,8 +460,8 @@ const Gitlab = {
   RateName: 'Plan',
   Rates: {
     'Free (1 user, 5GB)': 0,
-    'Premium (team, 50 GB)': 310,
-    'Ultimate (team, 250 GB)': 1060
+    'Premium (team, 50 GB)': 278,
+    'Ultimate (team, 250 GB. Ask for actual quote)': 999
   },
   RateUnit: 'CHF / user'
 }
@@ -498,7 +498,7 @@ const Dryad = {
   Provider: 'Dryad',
   Name: 'Dryad',
   Url: [
-    { Name: 'Dryad Website Pricing', Url: 'https://datadryad.org/stash/requirements#cost' }
+    { Name: 'Dryad Submission Costs', Url: 'https://datadryad.org/help/requirements/costs#author-fees' }
   ],
   ByYear: false,
   ExtraInfo: 'The costs of enabling access to research data under an SNSF grant are eligible. The  data archives (data repositories) have to meet the FAIR principles.',
@@ -693,7 +693,7 @@ const coderepository = {
   ]
 }
 
-const longermarchive = {
+const longtermarchive = {
   Name: 'Long-term Archive',
   Icon: 'archive.png',
   Url: '',
@@ -714,7 +714,7 @@ const MainData = {
   InstName: 'EPFL Library',
   InstLogo: 'logo.png',
   InstLogoWidth: 200,
-  Updated: '2025-10-10',
+  Updated: '2026-07-02',
   HelpUrl: 'mailto:researchdata@epfl.ch?subject=DMP%20support%20request',
   FeedbackUrl: 'mailto:researchdata@epfl.ch?subject=EPFL%20RDM%20CostCalc%20feedback',
   Currency: 'CHF',
@@ -728,5 +728,5 @@ const MainData = {
   Version: 'v2.5',
   DefaultDuration: 1,
   DefaultArchiveDuration: 10,
-  Data: [storage, ELN, Database, datarepository, coderepository, longermarchive]
+  Data: [storage, ELN, Database, datarepository, coderepository, longtermarchive]
 }
