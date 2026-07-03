@@ -333,7 +333,7 @@ const MysqlEpfl = {
   ],
   CatName: 'Options',
   Cat: {
-    'MariaDB max 2GB': 0
+    'MariaDB max 5GB': 0
   },
   CatUnit: 'CHF'
 }
