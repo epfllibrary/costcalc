@@ -574,7 +574,7 @@ class AmountRatesCost extends React.Component {
       Amount: '1',
       SelectRate: '0',
       Rate: this.props.data.Rates[Object.keys(this.props.data.Rates)[0]],
-      Adaptive: false  || (typeof this.props.data.Adaptive !== 'undefined' && this.props.data.Adaptive)
+      Adaptive: typeof this.props.data.Adaptive !== 'undefined' && this.props.data.Adaptive
     }
 
     this.makeExport()
@@ -679,7 +679,7 @@ class CategoryAmountRatesCost extends React.Component {
       SelectRate: '0',
       Rate: this.props.data.Rates[Object.keys(this.props.data.Rates)[0]],
       Free: 0,
-      Adaptive: false || (typeof this.props.data.Adaptive !== 'undefined' && this.props.data.Adaptive)
+      Adaptive: typeof this.props.data.Adaptive !== 'undefined' && this.props.data.Adaptive
     }
 
     this.makeExport()
@@ -883,7 +883,7 @@ class UserCost extends React.Component {
       ServiceError: true,
       ByYear: false
     }
-    this.export = []
+    // this.export = []
   }
 
   handleYearChange (state) {
@@ -940,10 +940,6 @@ class UserCost extends React.Component {
   componentDidUpdate () {
     this.makeCost(this.state.ByYear, this.state.value)
     this.makeExport();
-  }
-
-  makeExport() {
-
   }
 
   classtxt (error) {
