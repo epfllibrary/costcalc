@@ -12,9 +12,9 @@ authors:
     affiliation: "Ecole Polytechnique Fédérale de Lausanne, Library"
     email: "alain.borel@epfl.ch"
 title: "Cost Calculator"
-version: 2.3
+version: 2.5
 doi: 10.5281/zenodo.1469035
-date-released: 2024-04-08
+date-released: 2026-07-07
 repository-code: "https://c4science.ch/source/costcalc/repository/master/"
 url: "https://costcalc.epfl.ch/"
 keywords: 

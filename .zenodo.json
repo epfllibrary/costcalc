@@ -16,7 +16,7 @@
 
     "title": "RDM Cost Calculator",
 
-    "version": "2.3",
+    "version": "2.5",
 
     "description": "A dynamic online tool for calculating the cost of research data storage services. It's highly modular and can be adapted for all kind of application. The system is really easy to install as it uses only opensource javascript libraries.",
 
