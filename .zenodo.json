@@ -12,6 +12,8 @@
         }
     ],
 
+    "access_right": "open",
+
     "license": "gpl-3.0-only",
 
     "title": "RDM Cost Calculator",
